@@ -464,13 +464,101 @@
       to   { transform: translate(50%, -50%) rotate(-360deg); }
     }
 
-    @media (max-width:700px) {
+    /* ── HAMBURGER BUTTON ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px; height: 36px;
+      background: none; border: none; cursor: pointer;
+      padding: 4px; z-index: 210;
+    }
+    .nav-hamburger span {
+      display: block; width: 22px; height: 1px;
+      background: var(--text-lo);
+      transition: transform 0.25s ease, opacity 0.2s ease, background 0.2s;
+      transform-origin: center;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); background: var(--text-hi); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); background: var(--text-hi); }
+
+    /* ── MOBILE NAV DRAWER ── */
+    .nav-drawer {
+      display: none;
+      position: fixed; top: var(--nav-h); left: 0; right: 0;
+      background: rgba(4,5,14,0.97);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 8px 0 24px;
+      z-index: 199;
+      transform: translateY(-8px); opacity: 0;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+      pointer-events: none;
+    }
+    .nav-drawer.open {
+      transform: translateY(0); opacity: 1;
+      pointer-events: all;
+    }
+    .nav-drawer a {
+      display: block; padding: 14px 28px;
+      font-family: var(--mono); font-size: 0.65rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-lo); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-drawer a:hover, .nav-drawer a:active { color: var(--text-hi); }
+
+    /* ── RESPONSIVE BREAKPOINTS ── */
+    @media (max-width: 860px) {
+      .glass { padding: 56px 48px; }
+    }
+
+    @media (max-width: 700px) {
+      :root { --nav-h: 56px; }
+
       nav { padding: 0 20px; }
-      .nav-links { gap: 18px; }
-      .glass { padding: 48px 28px; }
-      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-drawer { display: block; }
+
+      .glass { padding: 40px 24px; }
+      .about-grid { grid-template-columns: 1fr; gap: 36px; }
       .projects-grid { grid-template-columns: 1fr; }
-      .page-wrap { padding: 0 16px; }
+      .page-wrap { padding: 0 14px; }
+      .section-wrap { padding: 28px 0 60px; }
+
+      .hero-name { font-size: clamp(2.6rem, 12vw, 4rem); }
+      .hero-cta { flex-direction: column; gap: 12px; }
+      .btn { text-align: center; padding: 14px 20px; }
+
+      .contact-heading { font-size: clamp(1.6rem, 7vw, 2.4rem); margin-bottom: 32px; }
+
+      .pub-item { grid-template-columns: 52px 1fr; gap: 16px; }
+      .pub-year { font-size: 0.52rem; }
+
+      .solar-system { width: 120px; height: 120px; top: 10px; right: 16px; }
+      .orbit-ring { width: 96px; height: 48px; margin-left: -48px; margin-top: -24px; }
+      .orbit-arm { width: 48px; }
+
+      .alien-wrap { right: 14px; bottom: -8px; }
+      .alien-wrap svg { width: 48px; height: 60px; }
+
+      footer { flex-direction: column; gap: 6px; padding: 20px 0 32px; }
+
+      /* hide decorative sprites on small screens to reduce clutter */
+      #satellite, #ufo { display: none; }
+    }
+
+    @media (max-width: 420px) {
+      .glass { padding: 32px 18px; }
+      .hero-name { font-size: clamp(2.2rem, 13vw, 3rem); }
+      .page-wrap { padding: 0 10px; }
+      .pub-item { grid-template-columns: 1fr; gap: 4px; }
+      .pub-year { padding-top: 0; }
+      .contact-link { gap: 12px; }
+      .link-label { width: 54px; }
     }
   </style>
 </head>
@@ -600,7 +688,18 @@
     <li><a href="#publications">Publications</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE NAV DRAWER -->
+<div class="nav-drawer" id="nav-drawer">
+  <a href="#about"        onclick="closeDrawer()">About</a>
+  <a href="#projects"     onclick="closeDrawer()">Projects</a>
+  <a href="#publications" onclick="closeDrawer()">Publications</a>
+  <a href="#contact"      onclick="closeDrawer()">Contact</a>
+</div>
 
 <div class="page-wrap">
 
@@ -1255,6 +1354,23 @@
   window.addEventListener('scroll', () => {
     document.body.style.backgroundPositionY = `${window.scrollY * 0.28}px`;
   }, { passive: true });
+
+  // ── HAMBURGER MENU ───────────────────────────────────────────
+  const hamburger = document.getElementById('nav-hamburger');
+  const drawer    = document.getElementById('nav-drawer');
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = hamburger.classList.toggle('open');
+    drawer.classList.toggle('open', isOpen);
+  });
+
+  function closeDrawer() {
+    hamburger.classList.remove('open');
+    drawer.classList.remove('open');
+  }
+
+  // Close drawer on scroll
+  window.addEventListener('scroll', closeDrawer, { passive: true });
 </script>
 </body>
 </html>
