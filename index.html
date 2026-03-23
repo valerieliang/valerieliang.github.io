@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Valerie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&family=Silkscreen:wght@400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --nav-h: 64px;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --mono:  'Silkscreen', monospace;
+      --sans:  'Outfit', sans-serif;
+      --glass-bg:     rgba(8,8,16,0.55);
+      --glass-border: rgba(255,255,255,0.07);
+      --text-hi:  #eef2f7;
+      --text-mid: rgba(200,215,235,0.65);
+      --text-lo:  rgba(180,200,225,0.35);
+      --accent:      rgba(120,180,255,0.22);
+      --accent-line: rgba(120,180,255,0.30);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      font-weight: 300;
+      color: var(--text-hi);
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+      background-color: #04050f;
+      background-image:
+        radial-gradient(ellipse 80% 60% at 18% 8%,  rgba(60,30,130,0.50) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 82% 82%, rgba(15,60,130,0.40) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 40% at 55% 30%, rgba(90,40,160,0.20) 0%, transparent 50%),
+        radial-gradient(ellipse 100% 100% at 50% 50%, #060a18 0%, #020208 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background-image:
+        radial-gradient(1px 1px at 7%   4%,  rgba(255,255,255,0.75) 0%, transparent 100%),
+        radial-gradient(1px 1px at 23%  11%, rgba(255,255,255,0.55) 0%, transparent 100%),
+        radial-gradient(1px 1px at 41%  3%,  rgba(255,255,255,0.65) 0%, transparent 100%),
+        radial-gradient(1px 1px at 58%  9%,  rgba(255,255,255,0.45) 0%, transparent 100%),
+        radial-gradient(1px 1px at 74%  5%,  rgba(255,255,255,0.60) 0%, transparent 100%),
+        radial-gradient(1px 1px at 89%  14%, rgba(255,255,255,0.50) 0%, transparent 100%),
+        radial-gradient(1px 1px at 4%   31%, rgba(255,255,255,0.45) 0%, transparent 100%),
+        radial-gradient(1px 1px at 33%  25%, rgba(255,255,255,0.35) 0%, transparent 100%),
+        radial-gradient(1px 1px at 52%  19%, rgba(255,255,255,0.55) 0%, transparent 100%),
+        radial-gradient(1px 1px at 66%  28%, rgba(255,255,255,0.40) 0%, transparent 100%),
+        radial-gradient(1px 1px at 91%  36%, rgba(255,255,255,0.50) 0%, transparent 100%),
+        radial-gradient(1px 1px at 16%  50%, rgba(255,255,255,0.40) 0%, transparent 100%),
+        radial-gradient(1px 1px at 47%  44%, rgba(255,255,255,0.30) 0%, transparent 100%),
+        radial-gradient(1px 1px at 77%  52%, rgba(255,255,255,0.45) 0%, transparent 100%),
+        radial-gradient(1px 1px at 9%   68%, rgba(255,255,255,0.50) 0%, transparent 100%),
+        radial-gradient(1px 1px at 36%  62%, rgba(255,255,255,0.35) 0%, transparent 100%),
+        radial-gradient(1px 1px at 63%  71%, rgba(255,255,255,0.45) 0%, transparent 100%),
+        radial-gradient(1px 1px at 84%  66%, rgba(255,255,255,0.40) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25%  80%, rgba(255,255,255,0.50) 0%, transparent 100%),
+        radial-gradient(1px 1px at 54%  85%, rgba(255,255,255,0.35) 0%, transparent 100%),
+        radial-gradient(1px 1px at 79%  88%, rgba(255,255,255,0.40) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 29% 38%, rgba(180,210,255,0.70) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 68% 17%, rgba(180,210,255,0.60) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 14% 76%, rgba(200,220,255,0.65) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 93% 58%, rgba(180,210,255,0.55) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 38% 28% at 28% 18%, rgba(80,50,180,0.09) 0%, transparent 70%),
+        radial-gradient(ellipse 45% 35% at 74% 72%, rgba(30,70,180,0.08) 0%, transparent 70%);
+      animation: nebulaDrift 22s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes nebulaDrift {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(16px,-12px) scale(1.03); }
+    }
+
+    /* ── SPRITES ── */
+    .pixel-sprite {
+      position: fixed;
+      z-index: 10;
+      pointer-events: none;
+      image-rendering: pixelated;
+      will-change: transform;
+    }
+
+    /* alien is inside contact section, not fixed */
+    .alien-wrap {
+      position: absolute;
+      bottom: -10px;
+      right: 28px;
+      pointer-events: none;
+      image-rendering: pixelated;
+      z-index: 5;
+    }
+
+    /* hero decoration items are inside the hero card */
+    .hero-deco {
+      position: absolute;
+      pointer-events: none;
+      image-rendering: pixelated;
+      z-index: 4;
+    }
+
+    /* ── LAYOUT ── */
+    .page-wrap {
+      position: relative; z-index: 3;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 0 24px;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--nav-h); z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      background: rgba(4,5,14,0.60);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .nav-logo {
+      font-family: var(--serif); font-size: 1.05rem;
+      color: var(--text-hi); text-decoration: none; letter-spacing: 0.01em;
+    }
+
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+
+    .nav-links a {
+      font-family: var(--mono); font-size: 0.58rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-lo); text-decoration: none;
+      transition: color 0.2s; position: relative;
+    }
+
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0;
+      width: 0; height: 1px; background: var(--accent-line);
+      transition: width 0.25s ease;
+    }
+
+    .nav-links a:hover { color: var(--text-hi); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .glass {
+      width: 100%; max-width: 900px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 4px;
+      backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+      padding: 72px 80px;
+      position: relative; overflow: visible;
+    }
+
+    .glass::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06) 40%, rgba(255,255,255,0.06) 60%, transparent);
+      pointer-events: none;
+    }
+
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding-top: var(--nav-h); width: 100%;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono); font-size: 0.58rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-lo); margin-bottom: 28px;
+      opacity: 0; animation: riseIn 0.9s cubic-bezier(0.22,1,0.36,1) forwards 0.3s;
+    }
+
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(3.2rem,7vw,5.6rem);
+      line-height: 1.06; letter-spacing: -0.025em;
+      color: var(--text-hi); margin-bottom: 32px;
+      opacity: 0; animation: riseIn 1s cubic-bezier(0.22,1,0.36,1) forwards 0.5s;
+    }
+
+    .hero-name em { font-style: italic; color: rgba(160,200,255,0.92); }
+
+    .hero-tagline {
+      font-size: 1rem; font-weight: 300;
+      color: var(--text-mid); max-width: 480px; line-height: 1.85;
+      opacity: 0; animation: riseIn 1s cubic-bezier(0.22,1,0.36,1) forwards 0.7s;
+    }
+
+    .hero-cta {
+      margin-top: 48px; display: flex; gap: 16px;
+      opacity: 0; animation: riseIn 1s cubic-bezier(0.22,1,0.36,1) forwards 0.9s;
+    }
+
+    .btn {
+      font-family: var(--mono); font-size: 0.58rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      text-decoration: none; padding: 11px 24px;
+      border-radius: 2px; transition: all 0.2s; cursor: pointer;
+    }
+
+    .btn-primary {
+      background: rgba(120,180,255,0.10);
+      border: 1px solid rgba(120,180,255,0.30);
+      color: var(--text-hi);
+    }
+    .btn-primary:hover { background: rgba(120,180,255,0.18); border-color: rgba(120,180,255,0.50); }
+
+    .btn-ghost {
+      background: transparent; border: 1px solid var(--glass-border); color: var(--text-mid);
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.16); color: var(--text-hi); }
+
+    .scroll-hint {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0; animation: riseIn 1s ease forwards 1.4s;
+    }
+
+    .scroll-hint span {
+      font-family: var(--mono); font-size: 0.52rem;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-lo);
+    }
+
+    .scroll-dot {
+      width: 1px; height: 36px;
+      background: linear-gradient(to bottom, var(--accent-line), transparent);
+      animation: pulse 2.2s ease infinite 1.6s;
+    }
+
+    @keyframes pulse { 0%,100%{opacity:0.3}50%{opacity:0.9} }
+
+    .section-wrap { width: 100%; max-width: 900px; padding: 40px 0 80px; }
+
+    .section-label {
+      font-family: var(--mono); font-size: 0.54rem;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--text-lo); margin-bottom: 32px;
+      display: flex; align-items: center; gap: 16px;
+    }
+
+    .section-label::after {
+      content: ''; flex: 1; height: 1px;
+      background: repeating-linear-gradient(90deg, var(--glass-border) 0px, var(--glass-border) 3px, transparent 3px, transparent 7px);
+    }
+
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+
+    .about-bio { font-size: 0.95rem; color: var(--text-mid); line-height: 1.9; }
+    .about-bio p + p { margin-top: 1.1em; }
+
+    .skills-col h3 { font-family: var(--serif); font-size: 1.3rem; color: var(--text-hi); font-weight: 400; margin-bottom: 28px; }
+    .skill-group { margin-bottom: 22px; }
+    .skill-group-label { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-lo); margin-bottom: 10px; }
+    .pills { display: flex; flex-wrap: wrap; gap: 7px; }
+    .pill { font-family: var(--mono); font-size: 0.55rem; color: var(--text-mid); border: 1px solid var(--glass-border); background: rgba(255,255,255,0.02); padding: 5px 11px; border-radius: 2px; transition: border-color 0.2s, color 0.2s, background 0.2s; }
+    .pill:hover { border-color: var(--accent-line); color: var(--text-hi); background: var(--accent); }
+
+    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .project-card {
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      border-radius: 4px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      padding: 30px 26px; text-decoration: none; color: inherit;
+      display: block; position: relative; overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+
+    .project-card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 10px; height: 10px;
+      border-top: 1px solid transparent; border-left: 1px solid transparent;
+      transition: border-color 0.25s;
+    }
+
+    .project-card:hover { border-color: rgba(120,180,255,0.22); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+    .project-card:hover::before { border-color: rgba(120,180,255,0.45); }
+    .project-card:hover .project-arrow { transform: translate(2px,-2px); color: rgba(160,200,255,0.8); }
+
+    .project-lang { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-lo); margin-bottom: 12px; }
+    .project-name { font-family: var(--serif); font-size: 1.15rem; color: var(--text-hi); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+    .project-arrow { font-size: 0.85rem; color: var(--text-lo); transition: transform 0.2s, color 0.2s; flex-shrink: 0; }
+    .project-desc { font-size: 0.875rem; color: var(--text-mid); line-height: 1.75; }
+
+    .pub-item {
+      display: grid; grid-template-columns: 72px 1fr; gap: 28px;
+      padding: 26px 0; border-bottom: 1px solid var(--glass-border);
+      text-decoration: none; color: inherit;
+    }
+    .pub-item:first-of-type { border-top: 1px solid var(--glass-border); }
+    .pub-item:hover .pub-title { color: rgba(160,200,255,0.9); }
+
+    .pub-year { font-family: var(--mono); font-size: 0.58rem; color: var(--text-lo); padding-top: 3px; }
+    .pub-title { font-family: var(--serif); font-size: 1.05rem; color: var(--text-hi); margin-bottom: 7px; line-height: 1.4; transition: color 0.2s; }
+    .pub-authors { font-family: var(--mono); font-size: 0.6rem; color: var(--text-lo); margin-bottom: 5px; letter-spacing: 0.04em; }
+    .pub-venue { font-size: 0.82rem; color: var(--text-mid); font-style: italic; }
+
+    /* Contact section needs position:relative for alien */
+    #contact-glass { position: relative; overflow: visible !important; }
+
+    .contact-heading { font-family: var(--serif); font-size: clamp(2rem,5vw,3.2rem); color: var(--text-hi); line-height: 1.1; margin-bottom: 48px; }
+    .contact-heading em { font-style: italic; color: rgba(160,200,255,0.88); }
+
+    .contact-link {
+      display: flex; align-items: center; gap: 20px; padding: 17px 0;
+      border-bottom: 1px solid var(--glass-border); text-decoration: none;
+      color: var(--text-mid); font-size: 0.9rem; transition: color 0.2s;
+    }
+    .contact-link:first-of-type { border-top: 1px solid var(--glass-border); }
+    .contact-link:hover { color: var(--text-hi); }
+    .contact-link:hover .link-arrow { transform: translateX(4px); color: rgba(160,200,255,0.8); }
+
+    .link-label { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-lo); width: 68px; flex-shrink: 0; }
+    .link-arrow { margin-left: auto; color: var(--text-lo); transition: transform 0.2s, color 0.2s; }
+
+    footer { width: 100%; max-width: 900px; padding: 24px 0 40px; display: flex; justify-content: space-between; border-top: 1px solid var(--glass-border); }
+    footer span { font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.07em; color: var(--text-lo); }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    .stagger > * { opacity: 0; transform: translateY(18px); transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1); }
+    .stagger.visible > *:nth-child(1) { transition-delay: 0s;    opacity: 1; transform: none; }
+    .stagger.visible > *:nth-child(2) { transition-delay: 0.08s; opacity: 1; transform: none; }
+    .stagger.visible > *:nth-child(3) { transition-delay: 0.16s; opacity: 1; transform: none; }
+    .stagger.visible > *:nth-child(4) { transition-delay: 0.24s; opacity: 1; transform: none; }
+
+    @keyframes riseIn { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+
+    /* alien wave arm */
+    @keyframes alienWave {
+      0%,100% { transform: rotate(0deg); transform-origin: bottom left; }
+      30%      { transform: rotate(-35deg); transform-origin: bottom left; }
+      60%      { transform: rotate(10deg); transform-origin: bottom left; }
+    }
+
+    .alien-arm { animation: alienWave 1.6s ease-in-out infinite; }
+
+    /* UFO light pulse */
+    @keyframes lightPulse {
+      0%,100%{opacity:0.9} 33%{opacity:0.3} 66%{opacity:0.7}
+    }
+
+    /* Space flag gentle sway */
+    @keyframes flagSway {
+      0%,100%{transform:skewY(0deg)} 50%{transform:skewY(4deg)}
+    }
+
+    /* Comet diagonal zoom over bottom-left corner */
+    @keyframes cometZoom {
+      0%   { opacity: 0;    transform: translate(-180px, 180px); }
+      8%   { opacity: 0.85; }
+      80%  { opacity: 0.80; }
+      100% { opacity: 0;    transform: translate(260px, -260px); }
+    }
+
+    #hd-comet {
+      animation: cometZoom 2.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+      animation-delay: 0.8s;
+    }
+
+    /* ── SOLAR SYSTEM ORBIT ── */
+    .solar-system {
+      position: absolute;
+      top: 14px;
+      right: 32px;
+      width: 200px;
+      height: 200px;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    .solar-sun {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      image-rendering: pixelated;
+    }
+
+    .orbit-ring {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 160px; height: 80px;
+      margin-left: -80px; margin-top: -40px;
+      border: 1px dashed rgba(255,220,120,0.18);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .orbit-arm {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 80px; height: 0;
+      transform-origin: 0 0;
+      animation: orbitSpin 9s linear infinite;
+    }
+
+    .orbit-planet {
+      position: absolute;
+      right: 0; top: 0;
+      transform: translate(50%, -50%);
+      image-rendering: pixelated;
+      animation: orbitCounterSpin 9s linear infinite;
+    }
+
+    @keyframes orbitSpin {
+      from { transform: rotate(0deg);   }
+      to   { transform: rotate(360deg); }
+    }
+    @keyframes orbitCounterSpin {
+      from { transform: translate(50%, -50%) rotate(0deg);    }
+      to   { transform: translate(50%, -50%) rotate(-360deg); }
+    }
+
+    @keyframes sunPulse {
+      0%,100% { filter: drop-shadow(0 0 5px rgba(255,210,60,0.55)); }
+      50%     { filter: drop-shadow(0 0 11px rgba(255,210,60,0.95)); }
+    }
+    .solar-sun { animation: sunPulse 2.8s ease-in-out infinite; }
+
+    /* ── MOON ORBIT around planet ── */
+    .moon-system {
+      position: relative;
+      display: inline-block;
+    }
+
+    .moon-arm {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 38px; height: 0;
+      transform-origin: 0 0;
+      animation: moonOrbit 3.8s linear infinite;
+    }
+
+    .moon-body {
+      position: absolute;
+      right: 0; top: 0;
+      transform: translate(50%, -50%);
+      image-rendering: pixelated;
+      animation: moonCounterSpin 3.8s linear infinite;
+      filter: drop-shadow(0 0 3px rgba(200,220,255,0.55));
+    }
+
+    @keyframes moonOrbit {
+      from { transform: rotate(0deg);   }
+      to   { transform: rotate(360deg); }
+    }
+
+    @keyframes moonCounterSpin {
+      from { transform: translate(50%, -50%) rotate(0deg);    }
+      to   { transform: translate(50%, -50%) rotate(-360deg); }
+    }
+
+    @media (max-width:700px) {
+      nav { padding: 0 20px; }
+      .nav-links { gap: 18px; }
+      .glass { padding: 48px 28px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .page-wrap { padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     FIXED PIXEL SPRITES
+══════════════════════════════════════ -->
+
+<!-- ROCKET: sideways, flies left → right -->
+<div class="pixel-sprite" id="rocket" style="top:90px;left:-140px;opacity:0;">
+  <!-- Rocket oriented horizontally: nose points right -->
+  <svg width="112" height="40" viewBox="0 0 28 10" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+    <!-- nose cone -->
+    <rect x="25" y="3" width="2" height="4" fill="#c8dcff"/>
+    <rect x="27" y="4" width="1" height="2" fill="#aaccff"/>
+    <!-- body -->
+    <rect x="10" y="2" width="15" height="6" fill="#dde8ff"/>
+    <!-- window -->
+    <rect x="18" y="3" width="3" height="3" fill="#7ab4ff" opacity="0.85"/>
+    <rect x="18" y="3" width="2" height="1" fill="#aad4ff" opacity="0.5"/>
+    <!-- top fin -->
+    <rect x="11" y="0" width="5" height="2" fill="#a0b8e0"/>
+    <!-- bottom fin -->
+    <rect x="11" y="8" width="5" height="2" fill="#a0b8e0"/>
+    <!-- engine bell -->
+    <rect x="9"  y="3" width="2" height="4" fill="#c8d8f0"/>
+    <rect x="8"  y="2" width="1" height="6" fill="#b0c4de"/>
+    <!-- exhaust flames -->
+    <rect x="4"  y="3" width="5" height="4" fill="#ffe680" opacity="0.85" id="ex1"/>
+    <rect x="1"  y="4" width="4" height="2" fill="#ffb030" opacity="0.65" id="ex2"/>
+    <rect x="0"  y="4" width="2" height="2" fill="#ff6020" opacity="0.35" id="ex3"/>
+  </svg>
+</div>
+
+<!-- PLANET: drifts from right near About -->
+<!-- <div class="pixel-sprite" id="planet" style="right:-160px;top:35%;opacity:0;">
+  <svg width="112" height="96" viewBox="0 0 28 24" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+    <rect x="0"  y="12" width="6"  height="2" fill="#5030a0" opacity="0.45"/>
+    <rect x="22" y="12" width="6"  height="2" fill="#5030a0" opacity="0.45"/>
+    <rect x="7"  y="2"  width="14" height="2" fill="#4a3488"/>
+    <rect x="5"  y="4"  width="18" height="2" fill="#5a3e9e"/>
+    <rect x="4"  y="6"  width="20" height="3" fill="#6a4aae"/>
+    <rect x="4"  y="9"  width="20" height="3" fill="#7a56be"/>
+    <rect x="4"  y="12" width="20" height="3" fill="#6a4aae"/>
+    <rect x="5"  y="15" width="18" height="2" fill="#5a3e9e"/>
+    <rect x="7"  y="17" width="14" height="2" fill="#4a3488"/>
+    <rect x="9"  y="4"  width="5"  height="2" fill="#a090d0" opacity="0.4"/>
+    <rect x="7"  y="6"  width="4"  height="1" fill="#a090d0" opacity="0.25"/>
+    <rect x="1"  y="12" width="5"  height="2" fill="#8060c0" opacity="0.60"/>
+    <rect x="22" y="12" width="5"  height="2" fill="#8060c0" opacity="0.60"/>
+  </svg>
+</div> -->
+
+<!-- SATELLITE: floats near Projects -->
+<div class="pixel-sprite" id="satellite" style="left:-100px;top:50%;opacity:0;">
+  <svg width="80" height="28" viewBox="0 0 20 7" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+    <rect x="0"  y="1" width="5"  height="4" fill="#3a6eb0" opacity="0.75"/>
+    <rect x="1"  y="1" width="1"  height="4" fill="#1a3e80" opacity="0.7"/>
+    <rect x="3"  y="1" width="1"  height="4" fill="#1a3e80" opacity="0.7"/>
+    <rect x="0"  y="2" width="5"  height="1" fill="#1a3e80" opacity="0.5"/>
+    <rect x="6"  y="1" width="8"  height="4" fill="#b0b8c8"/>
+    <rect x="7"  y="2" width="6"  height="2" fill="#8898b8" opacity="0.65"/>
+    <rect x="8"  y="2" width="2"  height="2" fill="#aaccee" opacity="0.5"/>
+    <rect x="15" y="1" width="5"  height="4" fill="#3a6eb0" opacity="0.75"/>
+    <rect x="15" y="1" width="1"  height="4" fill="#1a3e80" opacity="0.7"/>
+    <rect x="17" y="1" width="1"  height="4" fill="#1a3e80" opacity="0.7"/>
+    <rect x="15" y="2" width="5"  height="1" fill="#1a3e80" opacity="0.5"/>
+    <rect x="9"  y="0" width="1"  height="1" fill="#c8d4e0"/>
+  </svg>
+</div>
+
+<!-- ASTEROID: rolls across very bottom of viewport -->
+<div class="pixel-sprite" id="asteroid" style="right:-80px;bottom:12px;opacity:0;">
+  <svg width="52" height="52" viewBox="0 0 13 13" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+    <rect x="4" y="0" width="5" height="1" fill="#8888a0"/>
+    <rect x="2" y="1" width="7" height="1" fill="#9090a8"/>
+    <rect x="1" y="2" width="10" height="2" fill="#a0a0b0"/>
+    <rect x="0" y="4" width="13" height="4" fill="#9898b0"/>
+    <rect x="1" y="8" width="10" height="2" fill="#8888a0"/>
+    <rect x="3" y="10" width="6" height="1" fill="#787890"/>
+    <rect x="2" y="2" width="2" height="1" fill="#686880" opacity="0.6"/>
+    <rect x="7" y="5" width="2" height="1" fill="#686880" opacity="0.55"/>
+    <rect x="2" y="7" width="2" height="1" fill="#686880" opacity="0.5"/>
+    <rect x="5" y="1" width="3" height="1" fill="#d0d0e0" opacity="0.4"/>
+  </svg>
+</div>
+
+<!-- UFO: descends near Contact -->
+<div class="pixel-sprite" id="ufo" style="left:50%;top:-80px;opacity:0;">
+  <svg width="80" height="48" viewBox="0 0 20 12" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+    <rect x="7"  y="8"  width="6"  height="1" fill="#a0d0ff" opacity="0.3"/>
+    <rect x="6"  y="9"  width="8"  height="1" fill="#a0d0ff" opacity="0.2"/>
+    <rect x="5"  y="10" width="10" height="1" fill="#a0d0ff" opacity="0.12"/>
+    <rect x="4"  y="11" width="12" height="1" fill="#a0d0ff" opacity="0.07"/>
+    <rect x="7"  y="2"  width="6"  height="1" fill="#8898b0"/>
+    <rect x="6"  y="3"  width="8"  height="1" fill="#99aac0"/>
+    <rect x="6"  y="4"  width="8"  height="1" fill="#aabbd0"/>
+    <rect x="7"  y="3"  width="2"  height="1" fill="#c0e0ff" opacity="0.7"/>
+    <rect x="11" y="3"  width="2"  height="1" fill="#c0e0ff" opacity="0.7"/>
+    <rect x="2"  y="5"  width="16" height="2" fill="#b0b8c8"/>
+    <rect x="3"  y="7"  width="14" height="1" fill="#9098a8"/>
+    <rect x="4"  y="6"  width="1"  height="1" fill="#ffe060" opacity="0.9" style="animation:lightPulse 1.2s ease infinite 0s"/>
+    <rect x="7"  y="6"  width="1"  height="1" fill="#60e0ff" opacity="0.9" style="animation:lightPulse 1.2s ease infinite 0.4s"/>
+    <rect x="10" y="6"  width="1"  height="1" fill="#ff80a0" opacity="0.9" style="animation:lightPulse 1.2s ease infinite 0.8s"/>
+    <rect x="13" y="6"  width="1"  height="1" fill="#ffe060" opacity="0.9" style="animation:lightPulse 1.2s ease infinite 0.2s"/>
+  </svg>
+</div>
+
+<!-- SHOOTING STAR -->
+<div class="pixel-sprite" id="shooting-star" style="top:10%;left:-80px;opacity:0;">
+  <svg width="80" height="10" viewBox="0 0 20 2" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+    <rect x="19" y="0" width="1" height="1" fill="white" opacity="1"/>
+    <rect x="16" y="0" width="3" height="1" fill="white" opacity="0.7"/>
+    <rect x="11" y="0" width="5" height="1" fill="white" opacity="0.4"/>
+    <rect x="5"  y="1" width="6" height="1" fill="white" opacity="0.2"/>
+    <rect x="0"  y="1" width="5" height="1" fill="white" opacity="0.08"/>
+  </svg>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">@valerieliang</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="glass" style="position:relative;">
+
+      <!-- ── HERO DECORATIONS pinned around the name ── -->
+
+      <!-- ── SOLAR SYSTEM: sun + orbiting planet ── -->
+      <div class="solar-system" style="opacity:0.88;">
+
+        <!-- dashed orbit ring -->
+        <div class="orbit-ring"></div>
+
+        <!-- SUN -->
+        <div class="solar-sun">
+          <svg width="44" height="44" viewBox="0 0 11 11" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+            <!-- corona rays -->
+            <rect x="5" y="0" width="1" height="2" fill="#ffe080" opacity="0.55"/>
+            <rect x="5" y="9" width="1" height="2" fill="#ffe080" opacity="0.55"/>
+            <rect x="0" y="5" width="2" height="1" fill="#ffe080" opacity="0.55"/>
+            <rect x="9" y="5" width="2" height="1" fill="#ffe080" opacity="0.55"/>
+            <rect x="1" y="1" width="1" height="1" fill="#ffd060" opacity="0.40"/>
+            <rect x="9" y="1" width="1" height="1" fill="#ffd060" opacity="0.40"/>
+            <rect x="1" y="9" width="1" height="1" fill="#ffd060" opacity="0.40"/>
+            <rect x="9" y="9" width="1" height="1" fill="#ffd060" opacity="0.40"/>
+            <!-- outer glow ring -->
+            <rect x="3" y="2" width="5" height="1" fill="#ffe898" opacity="0.35"/>
+            <rect x="3" y="8" width="5" height="1" fill="#ffe898" opacity="0.35"/>
+            <rect x="2" y="3" width="1" height="5" fill="#ffe898" opacity="0.35"/>
+            <rect x="8" y="3" width="1" height="5" fill="#ffe898" opacity="0.35"/>
+            <!-- body -->
+            <rect x="3" y="3" width="5" height="5" fill="#ffd84a"/>
+            <rect x="4" y="2" width="3" height="7" fill="#ffd84a"/>
+            <rect x="2" y="4" width="7" height="3" fill="#ffd84a"/>
+            <!-- hot centre -->
+            <rect x="4" y="4" width="3" height="3" fill="#fff4a0"/>
+            <rect x="5" y="3" width="1" height="5" fill="#fff4a0"/>
+            <rect x="3" y="5" width="5" height="1" fill="#fff4a0"/>
+            <!-- bright core pixel -->
+            <rect x="5" y="5" width="1" height="1" fill="#ffffff"/>
+          </svg>
+        </div>
+
+        <!-- ORBIT ARM + PLANET + MOON -->
+        <div class="orbit-arm">
+          <div class="orbit-planet">
+            <!-- moon orbit wrapper -->
+            <div class="moon-system">
+              <!-- planet SVG -->
+              <svg width="52" height="52" viewBox="0 0 13 13" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;display:block;">
+                <!-- body -->
+                <rect x="4"  y="0"  width="5" height="1" fill="#7060c8"/>
+                <rect x="2"  y="1"  width="9" height="1" fill="#8070d8"/>
+                <rect x="1"  y="2"  width="11" height="1" fill="#9080e0"/>
+                <rect x="0"  y="3"  width="13" height="7" fill="#b0a0f4"/>
+                <rect x="1"  y="10" width="11" height="1" fill="#9080e0"/>
+                <rect x="2"  y="11" width="9"  height="1" fill="#8070d8"/>
+                <rect x="4"  y="12" width="5"  height="1" fill="#7060c8"/>
+                <!-- highlight -->
+                <rect x="2"  y="3"  width="3"  height="2" fill="#d8d0ff" opacity="0.50"/>
+                <rect x="2"  y="5"  width="2"  height="1" fill="#d8d0ff" opacity="0.25"/>
+                <!-- dark band -->
+                <rect x="0"  y="6"  width="13" height="2" fill="#5040a0" opacity="0.30"/>
+                <!-- surface spots -->
+                <rect x="8"  y="8"  width="3"  height="1" fill="#6858b8" opacity="0.55"/>
+                <rect x="3"  y="10" width="2"  height="1" fill="#6858b8" opacity="0.45"/>
+              </svg>
+              <!-- moon orbit arm -->
+              <div class="moon-arm">
+                <div class="moon-body">
+                  <svg width="16" height="16" viewBox="0 0 4 4" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;display:block;">
+                    <rect x="1" y="0" width="2" height="1" fill="#c8d4e4"/>
+                    <rect x="0" y="1" width="4" height="2" fill="#d4dfee"/>
+                    <rect x="1" y="3" width="2" height="1" fill="#b8c8d8"/>
+                    <!-- craters -->
+                    <rect x="1" y="1" width="1" height="1" fill="#a8b8cc" opacity="0.60"/>
+                    <rect x="2" y="2" width="1" height="1" fill="#a8b8cc" opacity="0.45"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- tiny star cluster top-right -->
+      <!-- <div class="hero-deco" style="top:38px;right:60px;opacity:0.5;" id="hd-stars">
+        <svg width="40" height="24" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+          <rect x="0" y="0" width="2" height="2" fill="#fff" opacity="0.9"/>
+          <rect x="4" y="1" width="2" height="2" fill="#c8e0ff" opacity="0.8"/>
+          <rect x="8" y="0" width="2" height="2" fill="#fff" opacity="0.7"/>
+          <rect x="2" y="4" width="2" height="2" fill="#c8e0ff" opacity="0.6"/>
+          <rect x="6" y="3" width="2" height="2" fill="#fff" opacity="0.75"/>
+        </svg>
+      </div> -->
+
+      <!-- comet zooming diagonally over bottom-left corner -->
+      <div class="hero-deco" id="hd-comet" style="bottom:0;left:0;opacity:0;pointer-events:none;overflow:visible;">
+        <svg width="140" height="56" viewBox="0 0 35 14" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;transform:rotate(-38deg);transform-origin:bottom left;">
+          <!-- glow halo behind head -->
+          <rect x="29" y="4"  width="6"  height="6"  fill="#a0c8ff" opacity="0.12"/>
+          <rect x="30" y="3"  width="5"  height="8"  fill="#c0dcff" opacity="0.10"/>
+          <!-- tail — long gradient fade -->
+          <rect x="0"  y="7"  width="6"  height="1"  fill="#3050a0" opacity="0.10"/>
+          <rect x="0"  y="6"  width="6"  height="3"  fill="#4060b0" opacity="0.08"/>
+          <rect x="4"  y="6"  width="6"  height="2"  fill="#5070c0" opacity="0.14"/>
+          <rect x="8"  y="6"  width="6"  height="2"  fill="#6080d0" opacity="0.20"/>
+          <rect x="12" y="5"  width="6"  height="3"  fill="#70a0e0" opacity="0.30"/>
+          <rect x="16" y="5"  width="6"  height="3"  fill="#80b0e8" opacity="0.42"/>
+          <rect x="20" y="4"  width="6"  height="5"  fill="#90c0f0" opacity="0.55"/>
+          <rect x="24" y="4"  width="4"  height="5"  fill="#a8d0f8" opacity="0.65"/>
+          <!-- secondary wisp above -->
+          <rect x="10" y="5"  width="8"  height="1"  fill="#80aadc" opacity="0.22"/>
+          <rect x="16" y="4"  width="8"  height="1"  fill="#90b8e8" opacity="0.30"/>
+          <rect x="22" y="3"  width="6"  height="1"  fill="#a8caf4" opacity="0.38"/>
+          <!-- wisp below -->
+          <rect x="14" y="8"  width="8"  height="1"  fill="#80aadc" opacity="0.18"/>
+          <rect x="20" y="9"  width="6"  height="1"  fill="#90b8e8" opacity="0.22"/>
+          <!-- coma -->
+          <rect x="27" y="3"  width="4"  height="7"  fill="#d0e8ff" opacity="0.45"/>
+          <rect x="28" y="2"  width="4"  height="9"  fill="#e0f0ff" opacity="0.30"/>
+          <!-- nucleus core -->
+          <rect x="31" y="5"  width="3"  height="4"  fill="#ffffff" opacity="0.95"/>
+          <rect x="30" y="5"  width="1"  height="4"  fill="#e8f4ff" opacity="0.80"/>
+          <rect x="31" y="4"  width="3"  height="1"  fill="#e8f4ff" opacity="0.70"/>
+          <rect x="31" y="9"  width="3"  height="1"  fill="#e8f4ff" opacity="0.70"/>
+          <!-- bright pixel specks in tail -->
+          <rect x="25" y="5"  width="1"  height="1"  fill="#ffffff" opacity="0.55"/>
+          <rect x="22" y="6"  width="1"  height="1"  fill="#c8e4ff" opacity="0.45"/>
+          <rect x="18" y="7"  width="1"  height="1"  fill="#a0c8ff" opacity="0.35"/>
+        </svg>
+      </div>
+
+      <!-- small moon left of tagline -->
+      <!-- <div class="hero-deco" style="bottom:80px;left:-14px;opacity:0.45;" id="hd-moon">
+        <svg width="28" height="28" viewBox="0 0 7 7" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+          <rect x="2" y="0" width="3" height="1" fill="#bbc8d8"/>
+          <rect x="1" y="1" width="5" height="1" fill="#c8d4e2"/>
+          <rect x="0" y="2" width="7" height="3" fill="#d0dae8"/>
+          <rect x="1" y="5" width="5" height="1" fill="#b0bece"/>
+          <rect x="2" y="6" width="3" height="1" fill="#a8b8c8"/>
+          <rect x="2" y="2" width="1" height="1" fill="#9aaabb" opacity="0.55"/>
+          <rect x="4" y="4" width="1" height="1" fill="#9aaabb" opacity="0.45"/>
+        </svg>
+      </div> -->
+
+      <!-- pixel constellation dots mid-right -->
+      <!-- <div class="hero-deco" style="top:50%;right:30px;opacity:0.30;transform:translateY(-50%);" id="hd-const">
+        <svg width="36" height="80" viewBox="0 0 9 20" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+          <rect x="4" y="0"  width="1" height="1" fill="white"/>
+          <rect x="1" y="4"  width="1" height="1" fill="white"/>
+          <rect x="6" y="7"  width="1" height="1" fill="white"/>
+          <rect x="3" y="11" width="1" height="1" fill="white"/>
+          <rect x="7" y="14" width="1" height="1" fill="white"/>
+          <rect x="2" y="18" width="1" height="1" fill="white"/>
+          <rect x="2" y="1"  width="3" height="1" fill="white" opacity="0.2"/>
+          <rect x="1" y="2"  width="1" height="2" fill="white" opacity="0.15"/>
+          <rect x="2" y="5"  width="4" height="1" fill="white" opacity="0.2"/>
+          <rect x="6" y="5"  width="1" height="2" fill="white" opacity="0.15"/>
+          <rect x="3" y="8"  width="4" height="1" fill="white" opacity="0.2"/>
+          <rect x="3" y="9"  width="1" height="2" fill="white" opacity="0.15"/>
+          <rect x="4" y="12" width="3" height="1" fill="white" opacity="0.2"/>
+          <rect x="7" y="12" width="1" height="2" fill="white" opacity="0.15"/>
+          <rect x="3" y="15" width="5" height="1" fill="white" opacity="0.2"/>
+          <rect x="2" y="16" width="1" height="2" fill="white" opacity="0.15"/>
+        </svg>
+      </div> -->
+
+      <!-- <p class="hero-eyebrow"> &nbsp;·&nbsp; </p> -->
+      <h1 class="hero-name">Hello,<br/>I'm <em>Valerie.</em></h1>
+      <!-- <p class="hero-tagline">
+        I build reliable, thoughtful software — from systems infrastructure to developer tooling.
+        Currently working on [what you're up to].
+      </p> -->
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact"  class="btn btn-ghost">Get in Touch</a>
+      </div>
+      <!-- <div class="scroll-hint">
+        <span>Scroll</span>
+        <div class="scroll-dot"></div>
+      </div> -->
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <div class="section-wrap" id="about">
+    <p class="section-label reveal">About</p>
+    <div class="glass reveal">
+      <div class="about-grid" style="align-items: center;">
+
+        <div class="about-bio" style="display:flex;flex-direction:column;gap:20px;">
+          <p style="font-size:1.05rem;color:var(--text-hi);line-height:1.8;font-weight:300;">
+            Studying <strong style="font-weight:500;color:#c8dcff;">Computer Science, Applied Mathematics &amp; Statistics, and Cognitive Science</strong> at Johns Hopkins University.
+          </p>
+          <p style="font-size:0.9rem;color:var(--text-mid);line-height:1.9;">
+            Passionate about machine learning, robotics, and computer vision — exploring how algorithms can perceive, reason, and interact with the world.
+          </p>
+        </div>
+
+        <div class="skills-col">
+          <!-- <h3 style="font-family:var(--serif);font-size:1.15rem;color:var(--text-hi);font-weight:400;margin-bottom:24px;letter-spacing:0.01em;">
+            Skills &amp; Interests
+          </h3> -->
+
+          <div class="skill-group" style="margin-bottom:20px;">
+            <p class="skill-group-label" style="font-family:var(--mono);font-size:0.50rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-lo);margin-bottom:10px;">
+              Languages
+            </p>
+            <div class="pills">
+              <span class="pill">Python</span>
+              <span class="pill">C++</span>
+              <span class="pill">Java</span>
+              <span class="pill">C</span>
+              <span class="pill">JS / TS</span>
+              <span class="pill">MATLAB</span>
+              <span class="pill">SQL</span>
+            </div>
+          </div>
+
+          <div style="width:100%;height:1px;background:var(--glass-border);margin:16px 0;"></div>
+
+          <div class="skill-group">
+            <p class="skill-group-label" style="font-family:var(--mono);font-size:0.50rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-lo);margin-bottom:10px;">
+              Interests
+            </p>
+            <div class="pills">
+              <span class="pill">ML / AI</span>
+              <span class="pill">Computer Vision</span>
+              <span class="pill">Autonomous Systems</span>
+              <span class="pill">Robotics</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+<!-- PROJECTS -->
+<div class="section-wrap" id="projects">
+  <p class="section-label reveal">Projects</p>
+  <div class="projects-grid stagger">
+
+    <a href="https://github.com/valerieliang/rover_obstacle_avoidance" target="_blank" class="project-card">
+      <p class="project-lang">Python · ROS2 · SLAM</p>
+      <div class="project-name">Mars Rover Navigation <span class="project-arrow">↗</span></div>
+      <p class="project-desc">Autonomous navigation stack for the JHU Mars Rover Team's URC competition entry. Integrates a visual SLAM pipeline (ZED SDK + ROS2), stereo depth estimation, and an Unscented Kalman Filter fusing GPS, IMU, encoder, and camera data for robust localization.</p>
+    </a>
+
+    <a href="https://github.com/valerieliang/fluidic-pinball-control" target="_blank" class="project-card">
+      <p class="project-lang">Python · RL · PDE Systems</p>
+      <div class="project-name">Fluidic Pinball Control <span class="project-arrow">↗</span></div>
+      <p class="project-desc">Reinforcement learning for closed-loop control of multi-physics fluid systems at Lawrence Berkeley National Lab. Frames the problem as a POMDP and applies actor-critic methods on top of a spatio-temporal Fourier transformer, benchmarked via HydroGym and Firedrake on HPC.</p>
+    </a>
+
+    <a href="https://github.com/valerieliang/semesterly" target="_blank" class="project-card">
+      <p class="project-lang">Python · Django · PostgreSQL</p>
+      <div class="project-name">Semester.ly <span class="project-arrow">↗</span></div>
+      <p class="project-desc">Full-stack course scheduling platform serving 6,000+ students across multiple universities. Built an automated prerequisite checker with PDF transcript parsing, integrated institutional course catalog APIs, and lead site reliability coordinating with university IT for 99.9% uptime.</p>
+    </a>
+
+    <a href="https://github.com/valerieliang/coconut-cot" target="_blank" class="project-card">
+      <p class="project-lang">Python · NLP · Interpretability</p>
+      <div class="project-name">Latent Reasoning vs. Verbal CoT <span class="project-arrow">↗</span></div>
+      <p class="project-desc">Probing study comparing reasoning faithfulness between Coconut's latent-space continuous thought vectors and standard verbal chain-of-thought on ProntoQA. Trains step-level linear probes to test whether intermediate logical conclusions are faithfully encoded at each reasoning step.</p>
+    </a>
+
+  </div>
+
+  <p style="margin-top:24px;font-family:var(--mono);font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;">
+    <a href="https://github.com/valerieliang?tab=repositories" target="_blank" style="color:var(--text-mid);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--text-hi)'" onmouseout="this.style.color='var(--text-mid)'">
+      See more projects ↗
+    </a>
+  </p>
+
+
+</div>
+
+  <!-- PUBLICATIONS -->
+  <div class="section-wrap" id="publications">
+    <p class="section-label reveal">Publications</p>
+    <div class="stagger">
+      <a href="#" class="pub-item">
+        <span class="pub-year">2026</span>
+        <div>
+          <p class="pub-title">Decentralized multi-agent reinforcement learning for hybrid truck-drone last-mile delivery.</p>
+          <p class="pub-authors">Liang V., Deniz, S., Chakraborty, S.</p>
+          <p class="pub-venue">Transportation Research Board 105th Annual Meeting, 2026</p>
+        </div>
+      </a>
+      <!-- <a href="#" class="pub-item">
+        <span class="pub-year">2023</span>
+        <div>
+          <p class="pub-title">Another Publication Title, Possibly Longer Than One Line</p>
+          <p class="pub-authors">Your Name, Collaborator One</p>
+          <p class="pub-venue">Workshop on Something Relevant, 2023</p>
+        </div>
+      </a>
+      <a href="#" class="pub-item">
+        <span class="pub-year">2022</span>
+        <div>
+          <p class="pub-title">Earlier Work: A Descriptive Title</p>
+          <p class="pub-authors">Your Name</p>
+          <p class="pub-venue">Preprint · arXiv, 2022</p>
+        </div>
+      </a> -->
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="section-wrap" id="contact">
+    <p class="section-label reveal">Contact</p>
+    <div class="glass reveal" id="contact-glass">
+      <h2 class="contact-heading">Let's connect! <br/>
+        <!-- <em>...</em> -->
+      </h2>
+      <div>
+        <a href="/cdn-cgi/l/email-protection#97e1fbfef6f9f0a2d7fdffb9f2f3e2" class="contact-link">
+          <span class="link-label">Email</span><span class="__cf_email__" data-cfemail="7402181d151a1341341e1c5a111001">[email&#160;protected]</span><span class="link-arrow">→</span>
+        </a>
+        <a href="https://github.com/valerieliang" target="_blank" class="contact-link">
+          <span class="link-label">GitHub</span>github.com/valerieliang<span class="link-arrow">→</span>
+        </a>
+        <a href="https://www.linkedin.com/in/valerie-liang/" target="_blank" class="contact-link">
+          <span class="link-label">LinkedIn</span>linkedin.com/in/valerie-liang<span class="link-arrow">→</span>
+        </a>
+      </div>
+
+      <!-- ALIEN — bottom right of contact card, waving -->
+      <div class="alien-wrap" id="alien" style="opacity:0;transition:opacity 0.8s ease;">
+        <svg width="64" height="80" viewBox="0 0 16 20" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+          <!-- antennae -->
+          <rect x="5"  y="0" width="1" height="2" fill="#80d890"/>
+          <rect x="9"  y="0" width="1" height="2" fill="#80d890"/>
+          <rect x="4"  y="0" width="1" height="1" fill="#a0ffb0"/>
+          <rect x="10" y="0" width="1" height="1" fill="#a0ffb0"/>
+          <!-- head -->
+          <rect x="3"  y="2" width="9"  height="1" fill="#70c880"/>
+          <rect x="2"  y="3" width="11" height="5" fill="#80d890"/>
+          <rect x="3"  y="8" width="9"  height="1" fill="#70c880"/>
+          <!-- big eyes -->
+          <rect x="3"  y="4" width="3"  height="3" fill="#101820"/>
+          <rect x="9"  y="4" width="3"  height="3" fill="#101820"/>
+          <!-- eye shine -->
+          <rect x="3"  y="4" width="1"  height="1" fill="white" opacity="0.7"/>
+          <rect x="9"  y="4" width="1"  height="1" fill="white" opacity="0.7"/>
+          <!-- mouth -->
+          <rect x="5"  y="7" width="5"  height="1" fill="#50a860"/>
+          <rect x="4"  y="6" width="1"  height="1" fill="#50a860"/>
+          <rect x="10" y="6" width="1"  height="1" fill="#50a860"/>
+          <!-- body -->
+          <rect x="4"  y="9"  width="7"  height="5" fill="#70c880"/>
+          <rect x="3"  y="10" width="9"  height="3" fill="#80d890"/>
+          <!-- space suit detail -->
+          <rect x="6"  y="10" width="3"  height="2" fill="#50a060" opacity="0.5"/>
+          <!-- left arm (static, down) -->
+          <rect x="1"  y="9"  width="2"  height="4" fill="#70c880"/>
+          <rect x="0"  y="12" width="2"  height="2" fill="#60b870"/>
+          <!-- right arm (waving) — wrapped for animation -->
+          <g class="alien-arm" style="transform-origin:14px 9px">
+            <rect x="12" y="9"  width="2"  height="2" fill="#70c880"/>
+            <rect x="13" y="7"  width="2"  height="3" fill="#70c880"/>
+            <rect x="13" y="6"  width="2"  height="2" fill="#60b870"/>
+            <!-- hand -->
+            <rect x="14" y="5"  width="2"  height="2" fill="#80d890"/>
+            <rect x="14" y="4"  width="1"  height="1" fill="#a0ffb0"/>
+          </g>
+          <!-- legs -->
+          <rect x="5"  y="14" width="2"  height="4" fill="#60b870"/>
+          <rect x="8"  y="14" width="2"  height="4" fill="#60b870"/>
+          <!-- boots -->
+          <rect x="4"  y="17" width="3"  height="2" fill="#409050"/>
+          <rect x="8"  y="17" width="3"  height="2" fill="#409050"/>
+          <!-- small flag in left hand -->
+          <rect x="0"  y="9"  width="1"  height="5" fill="#888898"/>
+          <rect x="1"  y="9"  width="3"  height="2" fill="#ff6060" style="animation:flagSway 2s ease-in-out infinite;transform-origin:1px 9px"/>
+        </svg>
+      </div>
+
+    </div><!-- /contact glass -->
+  </div>
+
+  <footer>
+    <span>Valerie Liang · Los Gatos, CA</span>
+    <span>© 2026</span>
+  </footer>
+
+</div><!-- /page-wrap -->
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // ── Scroll reveal ─────────────────────────────────────────────
+  const revealEls = document.querySelectorAll('.reveal, .stagger');
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); }});
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // ── Sprites ───────────────────────────────────────────────────
+  const rocket       = document.getElementById('rocket');
+  const planet       = document.getElementById('planet');
+  const satellite    = document.getElementById('satellite');
+  const asteroid     = document.getElementById('asteroid');
+  const ufo          = document.getElementById('ufo');
+  const shootingStar = document.getElementById('shooting-star');
+  const alien        = document.getElementById('alien');
+
+  const W = () => window.innerWidth;
+  const H = () => window.innerHeight;
+
+  function sectionTop(id) {
+    const el = document.getElementById(id);
+    return el ? el.getBoundingClientRect().top + window.scrollY : Infinity;
+  }
+
+  // ── 1. ROCKET: sideways left → right, scroll-driven ──────────
+  // Fires twice: hero section + skills/about section
+  let rocketActive = false;
+  let rocketDone   = false;
+  let rocketStartScroll = 0;
+  let rocketLane   = 90; // fixed px from top for this run
+
+  const ROCKET_TRAVEL = 600; // scroll px to cross screen
+
+  function launchRocket(lane) {
+    if (rocketActive) return;
+    rocketActive = true;
+    rocketDone   = false;
+    rocketStartScroll = window.scrollY;
+    rocketLane   = lane;
+    rocket.style.top     = lane + 'px';
+    rocket.style.opacity = '0.65';
+  }
+
+  function updateRocket(scrollY) {
+    if (!rocketActive) return;
+    const progress = Math.min((scrollY - rocketStartScroll) / ROCKET_TRAVEL, 1);
+    const x = -140 + progress * (W() + 280);
+    rocket.style.left      = x + 'px';
+    rocket.style.transform = 'none'; // stay horizontal
+    if (progress >= 1) {
+      rocket.style.opacity = '0';
+      rocketActive = false;
+      rocketDone   = true;
+    }
+  }
+
+  // ── 2. SHOOTING STAR ─────────────────────────────────────────
+  let shootingStarBusy = false;
+
+  function fireShootingStar(sx, sy) {
+    if (shootingStarBusy) return;
+    shootingStarBusy = true;
+    const angle = 20 + Math.random() * 15;
+    const dist  = W() * 0.55;
+    const rad   = angle * Math.PI / 180;
+
+    shootingStar.style.transition = 'none';
+    shootingStar.style.opacity    = '0';
+    shootingStar.style.left       = sx + 'px';
+    shootingStar.style.top        = sy + 'px';
+    shootingStar.style.transform  = `rotate(${angle}deg)`;
+
+    requestAnimationFrame(() => {
+      shootingStar.style.transition = 'left 0.5s linear, top 0.5s linear, opacity 0.08s linear';
+      shootingStar.style.opacity    = '0.85';
+      shootingStar.style.left       = (sx + dist) + 'px';
+      shootingStar.style.top        = (sy + dist * Math.tan(rad)) + 'px';
+      setTimeout(() => {
+        shootingStar.style.opacity = '0';
+        setTimeout(() => { shootingStarBusy = false; }, 300);
+      }, 420);
+    });
+  }
+
+  setTimeout(() => fireShootingStar(W() * 0.04, H() * 0.08), 1600);
+  setInterval(() => fireShootingStar(Math.random() * W() * 0.35, 40 + Math.random() * H() * 0.15), 6500);
+
+  // ── 3. PLANET ────────────────────────────────────────────────
+  let planetIn = false;
+  let planetBobT = 0;
+
+  function triggerPlanet(scrollY) {
+    const thresh = sectionTop('about') - H() * 0.65;
+    if (scrollY > thresh && !planetIn) {
+      planetIn = true;
+      planet.style.transition = 'right 1.4s cubic-bezier(0.22,1,0.36,1), opacity 0.8s ease';
+      planet.style.opacity    = '0.50';
+      planet.style.right      = '-24px';
+      planet.style.top        = (H() * 0.32) + 'px';
+    } else if (scrollY <= thresh - 100 && planetIn) {
+      planetIn = false;
+      planet.style.transition = 'right 1s ease, opacity 0.6s ease';
+      planet.style.opacity    = '0';
+      planet.style.right      = '-160px';
+    }
+  }
+
+  (function bobPlanet() {
+    if (planetIn) {
+      planetBobT += 0.011;
+      const y = H() * 0.32 + Math.sin(planetBobT) * 8;
+      planet.style.top = y + 'px';
+    }
+    requestAnimationFrame(bobPlanet);
+  })();
+
+  // ── 4. SATELLITE ─────────────────────────────────────────────
+  let satIn = false, satAngle = 0, satCX = 0, satCY = 0;
+
+  function triggerSatellite(scrollY) {
+    const thresh = sectionTop('projects') - H() * 0.5;
+    if (scrollY > thresh && !satIn) {
+      satIn = true;
+      satCX = W() * 0.10;
+      satCY = H() * 0.48;
+      satellite.style.opacity = '0.45';
+    } else if (scrollY <= thresh - 150 && satIn) {
+      satIn = false;
+      satellite.style.opacity = '0';
+    }
+  }
+
+  (function animateSatellite() {
+    if (satIn) {
+      satAngle += 0.005;
+      const x = satCX + Math.cos(satAngle) * 50 - 40;
+      const y = satCY + Math.sin(satAngle) * 25 - 14;
+      satellite.style.left      = x + 'px';
+      satellite.style.top       = y + 'px';
+      satellite.style.transform = `rotate(${satAngle * 20}deg)`;
+      satellite.style.transition = 'opacity 0.6s';
+    }
+    requestAnimationFrame(animateSatellite);
+  })();
+
+  // ── 5. ASTEROID: rolls along very bottom of viewport ─────────
+  let asteroidActive = false;
+  let astX = 0, astRot = 0;
+  let lastAsteroidTrigger = -9999;
+
+  function launchAsteroid() {
+    if (asteroidActive) return;
+    asteroidActive = true;
+    astX   = W() + 60;
+    astRot = 0;
+    asteroid.style.opacity  = '0.55';
+    asteroid.style.bottom   = '12px'; // glued to viewport bottom
+    asteroid.style.position = 'fixed';
+  }
+
+  (function animateAsteroid() {
+    if (asteroidActive) {
+      astX   -= 2.2;
+      astRot += 1.8;
+      asteroid.style.left      = astX + 'px';
+      asteroid.style.transform = `rotate(${astRot}deg)`;
+      if (astX < -60) {
+        asteroidActive = false;
+        asteroid.style.opacity = '0';
+        lastAsteroidTrigger = window.scrollY;
+      }
+    }
+    requestAnimationFrame(animateAsteroid);
+  })();
+
+  // ── 6. UFO ───────────────────────────────────────────────────
+  let ufoIn = false, ufoY = -80, ufoT = 0;
+
+  function triggerUFO(scrollY) {
+    const thresh = sectionTop('contact') - H() * 0.65;
+    if (scrollY > thresh && !ufoIn) {
+      ufoIn = true;
+      ufoY  = -80;
+      ufo.style.opacity = '0.50';
+      ufo.style.left    = (W() * 0.5 - 40) + 'px';
+    } else if (scrollY <= thresh - 200 && ufoIn) {
+      ufoIn = false;
+      ufoY  = -80;
+      ufo.style.opacity = '0';
+      ufo.style.top     = ufoY + 'px';
+    }
+  }
+
+  (function animateUFO() {
+    if (ufoIn) {
+      ufoT += 0.022;
+      const targetY = H() * 0.12;
+      ufoY += (targetY - ufoY) * 0.03;
+      ufo.style.top       = (ufoY + Math.sin(ufoT) * 6) + 'px';
+      ufo.style.transition = 'opacity 0.6s';
+    }
+    requestAnimationFrame(animateUFO);
+  })();
+
+  // ── 7. ALIEN: appears in contact section ─────────────────────
+  const alienObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      alien.style.opacity = e.isIntersecting ? '1' : '0';
+    });
+  }, { threshold: 0.3 });
+  alienObserver.observe(document.getElementById('contact-glass'));
+
+  // ── SCROLL HANDLER ───────────────────────────────────────────
+  let lastScrollY = 0;
+  let rocketPhase = 0; // 0=hero, 1=skills, 2=done
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const vel     = Math.abs(scrollY - lastScrollY);
+
+    // Rocket: phase 0 → hero (scrollY 80–600)
+    if (rocketPhase === 0 && scrollY > 80 && !rocketActive) {
+      launchRocket(72 + Math.random() * 40);
+    }
+    if (rocketPhase === 0 && rocketDone) rocketPhase = 1;
+
+    // Rocket: phase 1 → about/skills section
+    const aboutTop = sectionTop('about');
+    if (rocketPhase === 1 && scrollY > aboutTop - H() * 0.4 && !rocketActive) {
+      rocketDone = false;
+      launchRocket(64 + Math.random() * 50);
+    }
+    if (rocketPhase === 1 && rocketDone) rocketPhase = 2;
+
+    // Reset if user scrolls back to top
+    if (scrollY < 60) { rocketPhase = 0; rocketDone = false; }
+
+    updateRocket(scrollY);
+
+    // Fast scroll → shooting star
+    if (vel > 28) fireShootingStar(W() * (0.05 + Math.random() * 0.25), 30 + Math.random() * 50);
+
+    // Section triggers
+    triggerPlanet(scrollY);
+    triggerSatellite(scrollY);
+    triggerUFO(scrollY);
+
+    // Asteroid: trigger near publications, re-fires after full pass
+    const pubThresh = sectionTop('publications') - H() * 0.5;
+    if (scrollY > pubThresh && !asteroidActive && scrollY - lastAsteroidTrigger > 600) {
+      launchAsteroid();
+    }
+
+    lastScrollY = scrollY;
+  }, { passive: true });
+
+  // Parallax bg
+  window.addEventListener('scroll', () => {
+    document.body.style.backgroundPositionY = `${window.scrollY * 0.28}px`;
+  }, { passive: true });
+</script>
+</body>
+</html>
