@@ -28,7 +28,8 @@
   </svg>
 </div>
 
-<div class="pixel-sprite" id="shooting-star" style="top:10%;left:-80px;opacity:0;">
+<!-- SHOOTING STAR (will be repositioned dynamically) -->
+<div class="pixel-sprite shooting-star-instance" id="shooting-star" style="opacity:0; top:0; left:0;">
   <svg width="80" height="10" viewBox="0 0 20 2" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
     <rect x="19" y="0" width="1" height="1" fill="white" opacity="1"/>
     <rect x="16" y="0" width="3" height="1" fill="white" opacity="0.7"/>
@@ -302,6 +303,148 @@
 </div>
 
 <script>
+  // --- ENHANCED RANDOM SHOOTING STAR SYSTEM ---
+  // Each shooting star appears at a random position, random angle, and random travel distance.
+  // The timing is random (between 2.5s and 8s) and independent of scroll events.
+  
+  const shootingStar = document.getElementById('shooting-star');
+  let isAnimating = false;
+  
+  // Helper: get random number between min and max
+  function randomRange(min, max) {
+    return min + Math.random() * (max - min);
+  }
+  
+  // Get random angle between -20 and 20 degrees (mostly rightward and slightly up/down)
+  // For visual variety, we allow both slight upward and downward trajectories.
+  function getRandomAngle() {
+    // Range -25 to 25 degrees, negative = slightly upward, positive = downward
+    return randomRange(-25, 25);
+  }
+  
+  // Calculate travel distance based on viewport width: between 45% and 90% of screen width
+  // to ensure stars cross a good portion of the screen.
+  function getTravelDistance() {
+    return window.innerWidth * randomRange(0.45, 0.9);
+  }
+  
+  // Get random starting position: x from 0% to 70% of viewport width (so stars appear in varied areas)
+  // y from 5% to 85% of viewport height (avoid extreme edges)
+  function getRandomStartPosition() {
+    const startX = randomRange(0, window.innerWidth * 0.7);
+    const startY = randomRange(window.innerHeight * 0.05, window.innerHeight * 0.85);
+    return { startX, startY };
+  }
+  
+  // Trigger a shooting star with fully random parameters
+  function launchRandomShootingStar() {
+    if (isAnimating) return;
+    
+    isAnimating = true;
+    
+    // Get random start position
+    const { startX, startY } = getRandomStartPosition();
+    const angleDeg = getRandomAngle();
+    const travelDist = getTravelDistance();
+    const rad = angleDeg * Math.PI / 180;
+    
+    // Calculate end position based on angle and distance
+    const endX = startX + travelDist;
+    const endY = startY + travelDist * Math.tan(rad);
+    
+    // Reset and position the star element
+    shootingStar.style.transition = 'none';
+    shootingStar.style.opacity = '0';
+    shootingStar.style.left = startX + 'px';
+    shootingStar.style.top = startY + 'px';
+    shootingStar.style.transform = `rotate(${angleDeg}deg)`;
+    
+    // Force reflow to ensure transition works
+    void shootingStar.offsetHeight;
+    
+    // Random duration between 0.45s and 1.1s for natural speed variation
+    const duration = randomRange(0.45, 1.1);
+    shootingStar.style.transition = `left ${duration}s linear, top ${duration}s linear, opacity 0.12s linear`;
+    
+    requestAnimationFrame(() => {
+      // Fade in quickly
+      shootingStar.style.opacity = '0.85';
+      // Start the movement
+      shootingStar.style.left = endX + 'px';
+      shootingStar.style.top = endY + 'px';
+      
+      // After animation duration, fade out and reset
+      setTimeout(() => {
+        shootingStar.style.opacity = '0';
+        setTimeout(() => {
+          isAnimating = false;
+        }, 200);
+      }, duration * 1000);
+    });
+  }
+  
+  // Schedule shooting stars at random intervals (between 2.5 and 8 seconds)
+  function scheduleRandomStar() {
+    const nextDelay = randomRange(2500, 8000);
+    setTimeout(() => {
+      if (!isAnimating) {
+        launchRandomShootingStar();
+      }
+      scheduleRandomStar();
+    }, nextDelay);
+  }
+  
+  // Also trigger shooting stars occasionally on scroll (enhanced interactivity)
+  // but with a throttled random chance, not interfering with the regular schedule.
+  let lastScrollFire = 0;
+  window.addEventListener('scroll', () => {
+    const now = Date.now();
+    if (now - lastScrollFire > 1200 && !isAnimating && Math.random() < 0.28) {
+      lastScrollFire = now;
+      launchRandomShootingStar();
+    }
+  });
+  
+  // Initial delayed star after page load (gives a warm welcome)
+  setTimeout(() => {
+    if (!isAnimating) launchRandomShootingStar();
+  }, 1800);
+  
+  // Start the random infinite scheduler
+  scheduleRandomStar();
+  
+  // Rocket animation logic (unchanged from original, but kept fully functional)
+  const rocket = document.getElementById('rocket');
+  let rocketActive = false, rocketDone = false, rocketStartScroll = 0;
+  const ROCKET_TRAVEL = 600;
+  
+  function launchRocket(lane) {
+    if (rocketActive) return;
+    rocketActive = true;
+    rocketDone = false;
+    rocketStartScroll = window.scrollY;
+    rocket.style.top = lane + 'px';
+    rocket.style.opacity = '0.65';
+  }
+  
+  function updateRocket(sY) {
+    if (!rocketActive) return;
+    const p = Math.min((sY - rocketStartScroll) / ROCKET_TRAVEL, 1);
+    rocket.style.left = (-140 + p * (window.innerWidth + 280)) + 'px';
+    if (p >= 1) {
+      rocket.style.opacity = '0';
+      rocketActive = false;
+      rocketDone = true;
+    }
+  }
+  
+  // Alien visibility (unchanged)
+  const alien = document.getElementById('alien');
+  const alienObs = new IntersectionObserver(e => {
+    e.forEach(e => { alien.style.opacity = e.isIntersecting ? '1' : '0'; });
+  }, { threshold: 0.3 });
+  if (document.getElementById('contact-glass')) alienObs.observe(document.getElementById('contact-glass'));
+  
   // Scroll reveal
   const revealEls = document.querySelectorAll('.reveal, .stagger');
   const observer = new IntersectionObserver(e => {
@@ -313,69 +456,8 @@
     });
   }, { threshold: 0.1 });
   revealEls.forEach(el => observer.observe(el));
-
-  // Rocket animation
-  const rocket = document.getElementById('rocket');
-  const shootingStar = document.getElementById('shooting-star');
-  const alien = document.getElementById('alien');
-  let rocketActive = false, rocketDone = false, rocketStartScroll = 0;
-  const ROCKET_TRAVEL = 600;
-
-  function launchRocket(lane) {
-    if (rocketActive) return;
-    rocketActive = true;
-    rocketDone = false;
-    rocketStartScroll = window.scrollY;
-    rocket.style.top = lane + 'px';
-    rocket.style.opacity = '0.65';
-  }
-
-  function updateRocket(sY) {
-    if (!rocketActive) return;
-    const p = Math.min((sY - rocketStartScroll) / ROCKET_TRAVEL, 1);
-    rocket.style.left = (-140 + p * (window.innerWidth + 280)) + 'px';
-    if (p >= 1) {
-      rocket.style.opacity = '0';
-      rocketActive = false;
-      rocketDone = true;
-    }
-  }
-
-  // Shooting star
-  let shootingStarBusy = false;
-  function fireShootingStar(sx, sy) {
-    if (shootingStarBusy) return;
-    shootingStarBusy = true;
-    const angle = 20 + Math.random() * 15;
-    const dist = window.innerWidth * 0.55;
-    const rad = angle * Math.PI / 180;
-    shootingStar.style.transition = 'none';
-    shootingStar.style.opacity = '0';
-    shootingStar.style.left = sx + 'px';
-    shootingStar.style.top = sy + 'px';
-    shootingStar.style.transform = `rotate(${angle}deg)`;
-    requestAnimationFrame(() => {
-      shootingStar.style.transition = 'left 0.5s linear, top 0.5s linear, opacity 0.08s linear';
-      shootingStar.style.opacity = '0.85';
-      shootingStar.style.left = (sx + dist) + 'px';
-      shootingStar.style.top = (sy + dist * Math.tan(rad)) + 'px';
-      setTimeout(() => {
-        shootingStar.style.opacity = '0';
-        setTimeout(() => { shootingStarBusy = false; }, 300);
-      }, 420);
-    });
-  }
-
-  setTimeout(() => fireShootingStar(window.innerWidth * 0.04, window.innerHeight * 0.08), 1600);
-  setInterval(() => fireShootingStar(Math.random() * window.innerWidth * 0.35, 40 + Math.random() * window.innerHeight * 0.15), 6500);
-
-  // Alien visibility
-  const alienObs = new IntersectionObserver(e => {
-    e.forEach(e => { alien.style.opacity = e.isIntersecting ? '1' : '0'; });
-  }, { threshold: 0.3 });
-  alienObs.observe(document.getElementById('contact-glass'));
-
-  // Scroll handler
+  
+  // Rocket scroll phase management
   let lastScrollY = 0, rocketPhase = 0;
   window.addEventListener('scroll', () => {
     const sY = window.scrollY;
@@ -390,10 +472,9 @@
     if (rocketPhase === 1 && rocketDone) rocketPhase = 2;
     if (sY < 60) { rocketPhase = 0; rocketDone = false; }
     updateRocket(sY);
-    if (vel > 28) fireShootingStar(window.innerWidth * (0.05 + Math.random() * 0.25), 30 + Math.random() * 50);
     lastScrollY = sY;
   }, { passive: true });
-
+  
   // Mobile menu
   const hamburger = document.getElementById('nav-hamburger');
   const drawer = document.getElementById('nav-drawer');
