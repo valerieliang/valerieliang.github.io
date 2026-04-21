@@ -304,98 +304,66 @@
 
 <script>
   // --- ENHANCED RANDOM SHOOTING STAR SYSTEM ---
-  // Each shooting star appears at a random position, random angle, and random travel distance.
-  // The timing is random (between 2.5s and 8s) and independent of scroll events.
-  
   const shootingStar = document.getElementById('shooting-star');
   let isAnimating = false;
   
-  // Helper: get random number between min and max
   function randomRange(min, max) {
     return min + Math.random() * (max - min);
   }
   
-  // Get random angle between -20 and 20 degrees (mostly rightward and slightly up/down)
-  // For visual variety, we allow both slight upward and downward trajectories.
   function getRandomAngle() {
-    // Range -25 to 25 degrees, negative = slightly upward, positive = downward
     return randomRange(-25, 25);
   }
   
-  // Calculate travel distance based on viewport width: between 45% and 90% of screen width
-  // to ensure stars cross a good portion of the screen.
   function getTravelDistance() {
     return window.innerWidth * randomRange(0.45, 0.9);
   }
   
-  // Get random starting position: x from 0% to 70% of viewport width (so stars appear in varied areas)
-  // y from 5% to 85% of viewport height (avoid extreme edges)
   function getRandomStartPosition() {
     const startX = randomRange(0, window.innerWidth * 0.7);
     const startY = randomRange(window.innerHeight * 0.05, window.innerHeight * 0.85);
     return { startX, startY };
   }
   
-  // Trigger a shooting star with fully random parameters
   function launchRandomShootingStar() {
     if (isAnimating) return;
-    
     isAnimating = true;
-    
-    // Get random start position
     const { startX, startY } = getRandomStartPosition();
     const angleDeg = getRandomAngle();
     const travelDist = getTravelDistance();
     const rad = angleDeg * Math.PI / 180;
-    
-    // Calculate end position based on angle and distance
     const endX = startX + travelDist;
     const endY = startY + travelDist * Math.tan(rad);
     
-    // Reset and position the star element
     shootingStar.style.transition = 'none';
     shootingStar.style.opacity = '0';
     shootingStar.style.left = startX + 'px';
     shootingStar.style.top = startY + 'px';
     shootingStar.style.transform = `rotate(${angleDeg}deg)`;
-    
-    // Force reflow to ensure transition works
     void shootingStar.offsetHeight;
     
-    // Random duration between 0.45s and 1.1s for natural speed variation
     const duration = randomRange(0.45, 1.1);
     shootingStar.style.transition = `left ${duration}s linear, top ${duration}s linear, opacity 0.12s linear`;
     
     requestAnimationFrame(() => {
-      // Fade in quickly
       shootingStar.style.opacity = '0.85';
-      // Start the movement
       shootingStar.style.left = endX + 'px';
       shootingStar.style.top = endY + 'px';
-      
-      // After animation duration, fade out and reset
       setTimeout(() => {
         shootingStar.style.opacity = '0';
-        setTimeout(() => {
-          isAnimating = false;
-        }, 200);
+        setTimeout(() => { isAnimating = false; }, 200);
       }, duration * 1000);
     });
   }
   
-  // Schedule shooting stars at random intervals (between 2.5 and 8 seconds)
   function scheduleRandomStar() {
     const nextDelay = randomRange(2500, 8000);
     setTimeout(() => {
-      if (!isAnimating) {
-        launchRandomShootingStar();
-      }
+      if (!isAnimating) launchRandomShootingStar();
       scheduleRandomStar();
     }, nextDelay);
   }
   
-  // Also trigger shooting stars occasionally on scroll (enhanced interactivity)
-  // but with a throttled random chance, not interfering with the regular schedule.
   let lastScrollFire = 0;
   window.addEventListener('scroll', () => {
     const now = Date.now();
@@ -405,40 +373,139 @@
     }
   });
   
-  // Initial delayed star after page load (gives a warm welcome)
-  setTimeout(() => {
-    if (!isAnimating) launchRandomShootingStar();
-  }, 1800);
-  
-  // Start the random infinite scheduler
+  setTimeout(() => { if (!isAnimating) launchRandomShootingStar(); }, 1800);
   scheduleRandomStar();
   
-  // Rocket animation logic (unchanged from original, but kept fully functional)
+  // --- ROCKET ANIMATION (FIXED: triggers reliably when entering projects section) ---
   const rocket = document.getElementById('rocket');
-  let rocketActive = false, rocketDone = false, rocketStartScroll = 0;
+  let rocketActive = false;
+  let rocketDone = false;
+  let currentRocketAnimation = null;
   const ROCKET_TRAVEL = 600;
   
-  function launchRocket(lane) {
+  function launchRocket(laneY) {
     if (rocketActive) return;
     rocketActive = true;
     rocketDone = false;
-    rocketStartScroll = window.scrollY;
-    rocket.style.top = lane + 'px';
+    
+    // Cancel any ongoing transition to prevent conflicts
+    rocket.style.transition = '';
+    
+    // Set initial position
+    rocket.style.left = '-140px';
+    rocket.style.top = laneY + 'px';
     rocket.style.opacity = '0.65';
+    
+    // Force reflow
+    void rocket.offsetHeight;
+    
+    // Calculate end position and animate
+    const endLeft = window.innerWidth + 140;
+    const startScrollY = window.scrollY;
+    
+    function animateRocket() {
+      const currentScrollY = window.scrollY;
+      const scrolled = currentScrollY - startScrollY;
+      const progress = Math.min(scrolled / ROCKET_TRAVEL, 1);
+      const currentLeft = -140 + progress * (window.innerWidth + 280);
+      rocket.style.left = currentLeft + 'px';
+      
+      if (progress < 1 && rocketActive) {
+        currentRocketAnimation = requestAnimationFrame(animateRocket);
+      } else {
+        if (rocketActive) {
+          rocket.style.opacity = '0';
+          rocketActive = false;
+          rocketDone = true;
+        }
+        if (currentRocketAnimation) {
+          cancelAnimationFrame(currentRocketAnimation);
+          currentRocketAnimation = null;
+        }
+      }
+    }
+    
+    if (currentRocketAnimation) cancelAnimationFrame(currentRocketAnimation);
+    currentRocketAnimation = requestAnimationFrame(animateRocket);
   }
   
-  function updateRocket(sY) {
-    if (!rocketActive) return;
-    const p = Math.min((sY - rocketStartScroll) / ROCKET_TRAVEL, 1);
-    rocket.style.left = (-140 + p * (window.innerWidth + 280)) + 'px';
-    if (p >= 1) {
-      rocket.style.opacity = '0';
-      rocketActive = false;
-      rocketDone = true;
+  // Trigger rocket on scroll with multiple conditions
+  let rocketTriggered = false;
+  let rocketPhase = 0;
+  let hasTriggeredNearProjects = false;
+  
+  function checkAndLaunchRocket() {
+    const scrollY = window.scrollY;
+    const projectsSection = document.getElementById('projects');
+    const aboutSection = document.getElementById('about');
+    
+    if (!projectsSection) return;
+    
+    const projectsTop = projectsSection.offsetTop;
+    const aboutBottom = aboutSection ? aboutSection.offsetTop + aboutSection.offsetHeight : 0;
+    const viewportMid = window.innerHeight * 0.4;
+    
+    // Phase 0: initial rocket when scrolling past hero (first ~80px)
+    if (rocketPhase === 0 && scrollY > 80 && !rocketActive && !rocketDone) {
+      launchRocket(72 + Math.random() * 40);
+      rocketPhase = 1;
+    }
+    
+    // Phase 1: rocket when entering projects section (when projects comes into view)
+    if (rocketPhase === 1 && !rocketActive && !hasTriggeredNearProjects) {
+      // Trigger when projects section is near viewport (within 150px of entering)
+      const projectsRelativeTop = projectsTop - scrollY;
+      if (projectsRelativeTop < viewportMid + 100 && projectsRelativeTop > -200) {
+        launchRocket(64 + Math.random() * 50);
+        hasTriggeredNearProjects = true;
+        rocketPhase = 2;
+      }
+    }
+    
+    // Phase 2: reset when scrolled back to top
+    if (scrollY < 60) {
+      rocketPhase = 0;
+      rocketDone = false;
+      hasTriggeredNearProjects = false;
+      if (rocketActive) {
+        rocketActive = false;
+        rocket.style.opacity = '0';
+        if (currentRocketAnimation) {
+          cancelAnimationFrame(currentRocketAnimation);
+          currentRocketAnimation = null;
+        }
+      }
     }
   }
   
-  // Alien visibility (unchanged)
+  // Also trigger rocket when clicking the "View Projects" button
+  const viewProjectsBtn = document.querySelector('.btn-primary');
+  if (viewProjectsBtn) {
+    viewProjectsBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const projectsSection = document.getElementById('projects');
+      if (projectsSection) {
+        projectsSection.scrollIntoView({ behavior: 'smooth' });
+        // Slight delay to allow scroll to start
+        setTimeout(() => {
+          if (!rocketActive && rocketPhase !== 2) {
+            launchRocket(70 + Math.random() * 45);
+            rocketPhase = 2;
+            hasTriggeredNearProjects = true;
+          }
+        }, 200);
+      }
+    });
+  }
+  
+  window.addEventListener('scroll', () => {
+    checkAndLaunchRocket();
+  });
+  
+  // Initial check
+  setTimeout(checkAndLaunchRocket, 100);
+  
+  // Alien visibility
   const alien = document.getElementById('alien');
   const alienObs = new IntersectionObserver(e => {
     e.forEach(e => { alien.style.opacity = e.isIntersecting ? '1' : '0'; });
@@ -456,24 +523,6 @@
     });
   }, { threshold: 0.1 });
   revealEls.forEach(el => observer.observe(el));
-  
-  // Rocket scroll phase management
-  let lastScrollY = 0, rocketPhase = 0;
-  window.addEventListener('scroll', () => {
-    const sY = window.scrollY;
-    const vel = Math.abs(sY - lastScrollY);
-    if (rocketPhase === 0 && sY > 80 && !rocketActive) launchRocket(72 + Math.random() * 40);
-    if (rocketPhase === 0 && rocketDone) rocketPhase = 1;
-    const aboutTop = document.getElementById('about')?.getBoundingClientRect().top + window.scrollY || 0;
-    if (rocketPhase === 1 && sY > aboutTop - window.innerHeight * 0.4 && !rocketActive) {
-      rocketDone = false;
-      launchRocket(64 + Math.random() * 50);
-    }
-    if (rocketPhase === 1 && rocketDone) rocketPhase = 2;
-    if (sY < 60) { rocketPhase = 0; rocketDone = false; }
-    updateRocket(sY);
-    lastScrollY = sY;
-  }, { passive: true });
   
   // Mobile menu
   const hamburger = document.getElementById('nav-hamburger');
