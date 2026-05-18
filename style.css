@@ -485,12 +485,148 @@ nav {
 /* Publications */
 .pub-item {
   display: grid;
-  grid-template-columns: 72px 1fr;
+  grid-template-columns: 72px 1fr auto;
   gap: 28px;
   padding: 26px 0;
   border-bottom: 1px solid var(--glass-border);
   text-decoration: none;
   color: inherit;
+  cursor: pointer;
+  align-items: center;
+}
+
+.pub-abstract-hint {
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-lo);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.2s, transform 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+
+.pub-item:hover .pub-abstract-hint {
+  opacity: 1;
+  transform: translateX(0);
+  color: rgba(160,200,255,0.7);
+}
+
+/* Abstract Modal */
+.abstract-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(4,3,18,0.78);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s cubic-bezier(0.22,1,0.36,1);
+}
+
+.abstract-modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.abstract-modal-card {
+  background: rgba(10,10,28,0.92);
+  border: 1px solid rgba(120,180,255,0.18);
+  border-radius: 10px;
+  backdrop-filter: blur(28px);
+  padding: 52px 56px;
+  max-width: 680px;
+  width: 100%;
+  position: relative;
+  transform: translateY(18px) scale(0.97);
+  transition: transform 0.32s cubic-bezier(0.22,1,0.36,1);
+  outline: none;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(120,180,255,0.08);
+}
+
+.abstract-modal-overlay.open .abstract-modal-card {
+  transform: translateY(0) scale(1);
+}
+
+.abstract-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: var(--text-lo);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.abstract-modal-close:hover {
+  color: var(--text-hi);
+  background: rgba(255,255,255,0.05);
+}
+
+.abstract-modal-venue {
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(160,200,255,0.55);
+  margin-bottom: 14px;
+}
+
+.abstract-modal-title {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--text-hi);
+  line-height: 1.35;
+  margin-bottom: 10px;
+}
+
+.abstract-modal-authors {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  color: var(--text-lo);
+  letter-spacing: 0.04em;
+}
+
+.abstract-modal-divider {
+  height: 1px;
+  background: var(--glass-border);
+  margin: 24px 0;
+}
+
+.abstract-modal-label {
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(160,200,255,0.45);
+  margin-bottom: 12px;
+}
+
+.abstract-modal-text {
+  font-size: 0.9rem;
+  color: var(--text-mid);
+  line-height: 1.85;
+}
+
+@media (max-width: 700px) {
+  .abstract-modal-card {
+    padding: 36px 24px;
+  }
+  .abstract-modal-title {
+    font-size: 1.1rem;
+  }
 }
 
 .pub-item:first-of-type {
@@ -819,7 +955,7 @@ footer span {
     margin-bottom: 32px;
   }
   .pub-item {
-    grid-template-columns: 52px 1fr;
+    grid-template-columns: 52px 1fr auto;
     gap: 16px;
   }
   .pub-year {
@@ -868,6 +1004,9 @@ footer span {
   .pub-item {
     grid-template-columns: 1fr;
     gap: 4px;
+  }
+  .pub-abstract-hint {
+    display: none;
   }
   .pub-year {
     padding-top: 0;

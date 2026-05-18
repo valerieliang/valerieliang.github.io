@@ -237,15 +237,35 @@
   <div class="section-wrap" id="publications">
     <p class="section-label reveal">Publications</p>
     <div class="stagger">
-      <a href="#" class="pub-item">
+      <div class="pub-item" role="button" tabindex="0"
+        data-abstract="Traditional truck delivery systems face challenges in traffic congestion and remote accessibility, while drones are limited by payload capacity and operational range. To overcome these limitations, we propose a hybrid truck-drone last-mile delivery (LMD) framework featuring dynamic drone-truck rendezvous and unidirectional coordination. In our system, trucks serve as mobile depots, launching and retrieving drones in parallel to enhance delivery speed and coverage. We introduce a multi-agent reinforcement learning (MARL) model with asymmetric coordination: truck agents, modeled using Deep Q-Networks (DQN), optimize road routing, while drone agents, trained via Proximal Policy Optimization (PPO), leverage real-time truck state data to independently decide when to deliver or intercept the moving truck. This one-way coordination enables scalable, context-aware decision-making without centralized control. Evaluated on real-world maps using the University of Tennessee's REACH platform, our approach achieved up to 48% faster delivery times compared to truck-only logistics in trials with one truck and two drones. This framework is especially valuable for time-critical deliveries such as vaccines or emergency supplies to remote or disaster-affected regions, improving reliability, reducing costs, and increasing first-attempt success."
+        data-title="Decentralized multi-agent reinforcement learning for hybrid truck-drone last-mile delivery."
+        data-authors="Liang V., Deniz, S., Chakraborty, S."
+        data-venue="Transportation Research Board 105th Annual Meeting, 2026"
+        onclick="openAbstractModal(this)"
+        onkeydown="if(event.key==='Enter'||event.key===' ')openAbstractModal(this)">
         <span class="pub-year">2026</span>
         <div>
           <p class="pub-title">Decentralized multi-agent reinforcement learning for hybrid truck-drone last-mile delivery.</p>
           <p class="pub-authors">Liang V., Deniz, S., Chakraborty, S.</p>
           <p class="pub-venue">Transportation Research Board 105th Annual Meeting, 2026</p>
         </div>
-      </a>
+        <span class="pub-abstract-hint">Abstract ↗</span>
+      </div>
     </div>
+
+  <!-- ABSTRACT MODAL -->
+  <div id="abstract-modal" class="abstract-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="closeAbstractModal(event)">
+    <div class="abstract-modal-card">
+      <button class="abstract-modal-close" onclick="closeAbstractModal()" aria-label="Close">&times;</button>
+      <p class="abstract-modal-venue" id="modal-venue"></p>
+      <h3 class="abstract-modal-title" id="modal-title"></h3>
+      <p class="abstract-modal-authors" id="modal-authors"></p>
+      <div class="abstract-modal-divider"></div>
+      <p class="abstract-modal-label">Abstract</p>
+      <p class="abstract-modal-text" id="modal-abstract"></p>
+    </div>
+  </div>
   </div>
 
   <!-- CONTACT SECTION -->
@@ -545,6 +565,34 @@
   }
   window.closeDrawer = closeDrawer;
   window.addEventListener('scroll', closeDrawer, { passive: true });
+
+  // --- ABSTRACT MODAL ---
+  function openAbstractModal(el) {
+    const modal = document.getElementById('abstract-modal');
+    document.getElementById('modal-title').textContent = el.dataset.title;
+    document.getElementById('modal-authors').textContent = el.dataset.authors;
+    document.getElementById('modal-venue').textContent = el.dataset.venue;
+    document.getElementById('modal-abstract').textContent = el.dataset.abstract;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    modal.querySelector('.abstract-modal-card').focus();
+  }
+
+  function closeAbstractModal(e) {
+    if (e && e.target !== document.getElementById('abstract-modal') && !e.target.classList.contains('abstract-modal-close')) return;
+    document.getElementById('abstract-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.getElementById('abstract-modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  });
+
+  window.openAbstractModal = openAbstractModal;
+  window.closeAbstractModal = closeAbstractModal;
 </script>
 </body>
 </html>
