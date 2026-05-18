@@ -760,10 +760,13 @@ footer span {
   transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1);
 }
 
-.stagger.visible > *:nth-child(1) { transition-delay: 0s; opacity: 1; transform: none; }
+.stagger.visible > *:nth-child(1) { transition-delay: 0s;    opacity: 1; transform: none; }
 .stagger.visible > *:nth-child(2) { transition-delay: 0.08s; opacity: 1; transform: none; }
 .stagger.visible > *:nth-child(3) { transition-delay: 0.16s; opacity: 1; transform: none; }
 .stagger.visible > *:nth-child(4) { transition-delay: 0.24s; opacity: 1; transform: none; }
+.stagger.visible > *:nth-child(5) { transition-delay: 0.32s; opacity: 1; transform: none; }
+.stagger.visible > *:nth-child(6) { transition-delay: 0.40s; opacity: 1; transform: none; }
+.stagger.visible > *:nth-child(7) { transition-delay: 0.48s; opacity: 1; transform: none; }
 
 @keyframes riseIn {
   from { opacity: 0; transform: translateY(20px); }
