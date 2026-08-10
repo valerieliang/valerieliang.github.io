@@ -423,6 +423,19 @@ nav {
   gap: 10px;
 }
 
+.project-subhead {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-lo);
+  margin: 26px 0 2px;
+}
+
+.project-subhead:first-child {
+  margin-top: 0;
+}
+
 .project-card {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
