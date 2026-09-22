@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Projects · Valerie Liang</title>
+  <meta name="description" content="Projects by Valerie Liang — machine learning, robotics, computer vision, and a few things built purely for fun."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Space+Mono:wght@400;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <a href="index.html" class="nav-logo">@valerieliang</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="experience.html">Experience</a></li>
+    <li><a href="projects.html" class="active">Projects</a></li>
+    <li><a href="publications.html">Publications</a></li>
+    <li><a href="connect.html">Connect</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-drawer" id="nav-drawer">
+  <a href="index.html">Home</a>
+  <a href="experience.html">Experience</a>
+  <a href="projects.html">Projects</a>
+  <a href="publications.html">Publications</a>
+  <a href="connect.html">Connect</a>
+</div>
+
+<div class="page-wrap">
+
+  <header class="page-head">
+    <h1 class="page-title">Projects</h1>
+  </header>
+
+  <div class="section-wrap">
+    <div class="subtab-group" data-subtab-group>
+
+      <div class="subtabs" role="tablist" aria-label="Project groups">
+        <button class="subtab active" role="tab" id="tab-software" data-panel="software"
+                aria-controls="panel-software" aria-selected="true" tabindex="0">Software</button>
+        <button class="subtab" role="tab" id="tab-hardware" data-panel="hardware"
+                aria-controls="panel-hardware" aria-selected="false" tabindex="-1">Hardware</button>
+      </div>
+
+      <section class="subtab-panel active" role="tabpanel" data-panel="software"
+               id="panel-software" aria-labelledby="tab-software">
+        <p class="section-label">Featured</p>
+        <div class="projects-grid stagger">
+<a href="https://github.com/valerieliang/rfi-mitigation" target="_blank" rel="noopener" class="project-card">
+        <div class="project-main">
+          <p class="project-lang">Python · Signal Processing · ML</p>
+          <div class="project-name">RFI Mitigation for the NISAR Satellite Mission</div>
+          <p class="project-desc">
+            Radio frequency interference detection and mitigation for NISAR
+            Level-0 data, built at SURF@JPL 2026. A two-branch CNN learns the
+            eigenvalue cutoff per tile instead of using a fixed one, so heavily
+            contaminated tiles get cleaned properly and bright urban scatterers
+            survive rather than being discarded as interference.
+          </p>
+        </div>
+        <span class="project-arrow">&#8599;</span>
+      </a>
+
+      <a href="https://github.com/valerieliang/steering-coconut-llm" target="_blank" rel="noopener" class="project-card">
+        <div class="project-main">
+          <p class="project-lang">Python · PyTorch · Interpretability</p>
+          <div class="project-name">Causal Intervention Analysis of Coconut LLM</div>
+          <p class="project-desc">
+            Steering vector experiments for the Coconut LLM. Extracts and analyzes
+            steering vectors using contrastive pair methods (swap and cross-pair)
+            to push latent reasoning trajectories around, and evaluates how
+            superposition affects question answering.
+          </p>
+        </div>
+        <span class="project-arrow">&#8599;</span>
+      </a>
+
+      <a href="https://github.com/valerieliang/monte-carlo-slam-maps" target="_blank" rel="noopener" class="project-card">
+        <div class="project-main">
+          <p class="project-lang">Python · SLAM · EKF</p>
+          <div class="project-name">Monte Carlo EKF-SLAM Simulator</div>
+          <p class="project-desc">
+            Active EKF-SLAM simulator for exploring unknown 2D environments. The
+            robot builds a feature-based map with an Extended Kalman Filter and
+            picks where to go next by Monte Carlo sampling driven by its own
+            positional uncertainty and expected information gain.
+          </p>
+        </div>
+        <span class="project-arrow">&#8599;</span>
+      </a>
+        </div>
+      </section>
+
+      <section class="subtab-panel" role="tabpanel" data-panel="hardware"
+               id="panel-hardware" aria-labelledby="tab-hardware" hidden>
+        <p class="panel-lead">
+          I picked up an Arduino at HopHacks 2026 and I'm starting to learn
+          and build with it!
+        </p>
+
+        <p class="section-label">Builds</p>
+        <div class="projects-grid stagger">
+
+          <!--
+            Replace this placeholder with a real .project-card (copy the markup
+            from the Software panel) as each build happens.
+          -->
+          <div class="project-card placeholder">
+            <div class="project-main">
+              <p class="project-lang">In planning</p>
+              <div class="project-name">First project</div>
+              <p class="project-desc">
+                Not yet started. Builds will be posted here as they happen.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <p class="more-link">
+      <a href="https://github.com/valerieliang" target="_blank" rel="noopener">See more on GitHub &#8599;</a>
+    </p>
+  </div>
+
+  <footer>
+    <span>Valerie Liang · Los Gatos, CA</span>
+    <span>&copy; 2026</span>
+  </footer>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>

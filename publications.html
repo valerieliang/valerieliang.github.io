@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Publications · Valerie Liang</title>
+  <meta name="description" content="Conference papers by Valerie Liang."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Space+Mono:wght@400;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <a href="index.html" class="nav-logo">@valerieliang</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="experience.html">Experience</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="publications.html" class="active">Publications</a></li>
+    <li><a href="connect.html">Connect</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-drawer" id="nav-drawer">
+  <a href="index.html">Home</a>
+  <a href="experience.html">Experience</a>
+  <a href="projects.html">Projects</a>
+  <a href="publications.html">Publications</a>
+  <a href="connect.html">Connect</a>
+</div>
+
+<div class="page-wrap">
+
+  <header class="page-head">
+    <h1 class="page-title">Publications</h1>
+    <p class="page-intro">
+      Conference papers. Click an entry to read the abstract.
+    </p>
+  </header>
+
+  <div class="section-wrap" id="publications">
+    <p class="section-label reveal">Conference Papers</p>
+    <div class="stagger">
+
+      <div class="pub-item" role="button" tabindex="0"
+        data-abstract="Traditional truck delivery systems face challenges in traffic congestion and remote accessibility, while drones are limited by payload capacity and operational range. To overcome these limitations, we propose a hybrid truck-drone last-mile delivery (LMD) framework featuring dynamic drone-truck rendezvous and unidirectional coordination. In our system, trucks serve as mobile depots, launching and retrieving drones in parallel to enhance delivery speed and coverage. We introduce a multi-agent reinforcement learning (MARL) model with asymmetric coordination: truck agents, modeled using Deep Q-Networks (DQN), optimize road routing, while drone agents, trained via Proximal Policy Optimization (PPO), leverage real-time truck state data to independently decide when to deliver or intercept the moving truck. This one-way coordination enables scalable, context-aware decision-making without centralized control. Evaluated on real-world maps using the University of Tennessee's REACH platform, our approach achieved up to 48% faster delivery times compared to truck-only logistics in trials with one truck and two drones. This framework is especially valuable for time-critical deliveries such as vaccines or emergency supplies to remote or disaster-affected regions, improving reliability, reducing costs, and increasing first-attempt success."
+        data-title="Decentralized multi-agent reinforcement learning for hybrid truck-drone last-mile delivery."
+        data-authors="Liang, V., Deniz, S., &amp; Chakraborty, S."
+        data-venue="Transportation Research Board 105th Annual Meeting, 2026 · Paper No. TRBAM-26-04038">
+        <span class="pub-year">2026</span>
+        <div>
+          <p class="pub-title">Decentralized multi-agent reinforcement learning for hybrid truck-drone last-mile delivery.</p>
+          <p class="pub-authors">Liang, V., Deniz, S., &amp; Chakraborty, S.</p>
+          <p class="pub-venue">Transportation Research Board 105th Annual Meeting, Washington, DC · Paper No. TRBAM-26-04038</p>
+        </div>
+        <span class="pub-abstract-hint">Abstract &#8599;</span>
+      </div>
+
+    </div>
+
+    <p class="more-link">
+      <a href="experience.html#reu">The research behind it &#8599;</a>
+    </p>
+  </div>
+
+  <footer>
+    <span>Valerie Liang · Los Gatos, CA</span>
+    <span>&copy; 2026</span>
+  </footer>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>

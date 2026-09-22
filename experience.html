@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Experience · Valerie Liang</title>
+  <meta name="description" content="Research and engineering experience — NASA Armstrong, NASA JPL, NSF REU, JHU Mars Rover Team, Semester.ly."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Space+Mono:wght@400;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <a href="index.html" class="nav-logo">@valerieliang</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="experience.html" class="active">Experience</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="publications.html">Publications</a></li>
+    <li><a href="connect.html">Connect</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-drawer" id="nav-drawer">
+  <a href="index.html">Home</a>
+  <a href="experience.html">Experience</a>
+  <a href="projects.html">Projects</a>
+  <a href="publications.html">Publications</a>
+  <a href="connect.html">Connect</a>
+</div>
+
+<div class="page-wrap">
+
+  <header class="page-head">
+    <h1 class="page-title">Experience</h1>
+  </header>
+
+  <div class="section-wrap">
+    <div class="subtab-group" data-subtab-group>
+
+      <div class="subtabs" role="tablist" aria-label="Experience sections">
+        <button class="subtab active" role="tab" id="tab-research" data-panel="research"
+                aria-controls="panel-research" aria-selected="true" tabindex="0">Experience</button>
+        <button class="subtab" role="tab" id="tab-orgs" data-panel="orgs"
+                aria-controls="panel-orgs" aria-selected="false" tabindex="-1">Student Orgs</button>
+      </div>
+
+      <section class="subtab-panel active" role="tabpanel" data-panel="research"
+               id="panel-research" aria-labelledby="tab-research">
+        <div class="stagger">
+
+      <article class="exp-item" id="armstrong">
+        <div class="exp-head">
+          <div>
+            <h3 class="exp-role">Student Engineer</h3>
+            <p class="exp-org">NASA Neil A. Armstrong Flight Research Center</p>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-date">Feb 2026 — Present</span>
+            <span class="exp-loc">Edwards AFB, CA</span>
+          </div>
+        </div>
+        <p class="exp-note">Flight Test Instrumentation &amp; System Integration Branch (Code 550)</p>
+        <ul class="exp-bullets">
+          <li>
+            Investigating whether actuator faults can be identified from raw
+            telemetry by a model small enough to run on NASA's High-Performance
+            Spaceflight Computing (HPSC) processor, replacing threshold logic
+            that requires per-vehicle tuning and degrades when telemetry drops
+            out.
+          </li>
+          <li>
+            Built an 87K-parameter 1D CNN that separates seven actuator and
+            power-bus fault states at 99.1% accuracy and holds above 98%
+            through two-second telemetry blackouts, establishing that the
+            blackout case does not require a separate estimator.
+          </li>
+          <li>
+            Reduced the model 3.4&times; in size and 1.75&times; in latency via
+            int8 post-training quantization with no measurable accuracy loss,
+            bringing it inside the flight compute budget.
+          </li>
+          <li>
+            Constructed the training corpus with no prior dataset: wrote an
+            RS-485 driver to command the actuator, characterized its noise
+            signature on hardware, and rebuilt the response in a Simulink
+            plant model, surfacing a 10&times; torque-constant error in the
+            existing model.
+          </li>
+        </ul>
+      </article>
+
+      <article class="exp-item" id="jpl">
+        <div class="exp-head">
+          <div>
+            <h3 class="exp-role">Summer Research Fellow (SURF)</h3>
+            <p class="exp-org">NASA Jet Propulsion Laboratory</p>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-date">Jun 2026 — Aug 2026</span>
+            <span class="exp-loc">Pasadena, CA</span>
+          </div>
+        </div>
+        <p class="exp-note">NASA-ISRO Synthetic Aperture Radar (NISAR) Algorithm Development Team</p>
+        <ul class="exp-bullets">
+          <li>
+            Addressed a failure mode in NISAR's radio frequency interference
+            (RFI) mitigation stage, where a fixed eigenvalue cutoff under-nulls
+            heavily contaminated tiles and over-nulls genuine scatterers, by
+            learning the boundary per tile with a two-branch CNN.
+          </li>
+          <li>
+            Suppressed more residual RFI than classical eigenvalue-decomposition
+            methods in high-power regions while preserving bright urban
+            scatterers that the deployed frequency-domain mitigation discards
+            as interference, isolating a class of scenes where the classical
+            criterion is systematically wrong rather than merely noisy.
+          </li>
+          <li>
+            Matched production and state-of-the-art quality across a curated
+            seven-scene benchmark, delivered as a drop-in stage preserving
+            existing HDF5 formats and pipeline interfaces.
+          </li>
+        </ul>
+      </article>
+
+      <article class="exp-item" id="reu">
+        <div class="exp-head">
+          <div>
+            <h3 class="exp-role">Machine Learning Research Intern</h3>
+            <p class="exp-org">NSF REU, University of Tennessee</p>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-date">May 2025 — Aug 2025</span>
+            <span class="exp-loc">Knoxville, TN</span>
+          </div>
+        </div>
+        <p class="exp-note">Advised by Dr. Subhadeep Chakraborty and Sabrullah Deniz</p>
+        <ul class="exp-bullets">
+          <li>
+            Asked whether removing fixed rendezvous points from truck-drone
+            delivery, so drones launch from and reintercept a truck in motion,
+            recovers the idle time both vehicles spend waiting.
+          </li>
+          <li>
+            Reduced last-mile delivery time 33&ndash;48% against a truck-only
+            baseline across two Knoxville case studies, and traced the upper
+            end of the range to the city's 80% one-way street network rather
+            than to the policy itself.
+          </li>
+          <li>
+            Trained a single drone policy covering both delivery and
+            moving-truck interception through a shared encoder with
+            phase-specific actor-critic heads, paired with a DQN truck router
+            using prioritized experience replay.
+          </li>
+          <li>
+            Grounded the result in operational limits by modeling a
+            20&ndash;80% usable battery window and a 10-mile range, so the
+            reported gains hold under fielded constraints.
+          </li>
+        </ul>
+      </article>
+        </div>
+      </section>
+
+
+      <section class="subtab-panel" role="tabpanel" data-panel="orgs"
+               id="panel-orgs" aria-labelledby="tab-orgs" hidden>
+        <div class="stagger">
+
+      <article class="exp-item" id="rover">
+        <div class="exp-head">
+          <div>
+            <h3 class="exp-role">Autonomous Navigation Software Engineer</h3>
+            <p class="exp-org">Mars Rover Team, Johns Hopkins University</p>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-date">Aug 2025 — Present</span>
+            <span class="exp-loc">Baltimore, MD</span>
+          </div>
+        </div>
+        <p class="exp-note">Student-run competition team &#183; autonomy subsystem of a competition rover fielded annually at the University Rover Challenge</p>
+        <ul class="exp-bullets">
+          <li>
+            <strong>Autonomous Subteam Lead, Dec. 2025 &mdash; Present.</strong>
+            Leading eight engineers against a fixed competition date, setting
+            timelines and owning the interfaces where four sensor pipelines
+            meet the rest of the vehicle, so mechanical and electrical work
+            can proceed without waiting on autonomy.
+          </li>
+          <li>
+            Delivered the team's GPS-independent localization module, a
+            competition requirement rather than an exercise: implemented
+            visual odometry and an Unscented Kalman Filter fusing encoder,
+            inertial, satellite, and stereo measurements into a single pose
+            estimate the navigation stack consumes directly.
+          </li>
+          <li>
+            Developed a visual SLAM pipeline from scratch in ROS 2 with the
+            ZED SDK for stereo depth, pose tracking, and mapping, validated on
+            recorded sequences before vehicle integration so field time was
+            spent on tuning rather than debugging.
+          </li>
+        </ul>
+      </article>
+
+      <article class="exp-item" id="semesterly">
+        <div class="exp-head">
+          <div>
+            <h3 class="exp-role">Software Engineer</h3>
+            <p class="exp-org">Semester.ly, Johns Hopkins University</p>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-date">Feb 2025 — Present</span>
+            <span class="exp-loc">Baltimore, MD</span>
+          </div>
+        </div>
+        <p class="exp-note">Student-run open-source project &#183; course-scheduling platform used by 6,000+ students across multiple universities, maintained in coordination with university IT</p>
+        <ul class="exp-bullets">
+          <li>
+            <strong>Team Lead, Feb. 2026 &mdash; Present.</strong> Own outage
+            response with university IT and hold 99.9% uptime through
+            registration periods, when the entire user base arrives at once;
+            set technical direction and hire onto the team.
+          </li>
+          <li>
+            Built API ingestion pipelines with Python, Django, PostgreSQL, and
+            Docker to integrate institutional course catalogs, absorbing
+            upstream schema changes the university makes without notice so
+            the platform stays correct each term.
+          </li>
+          <li>
+            Built an automated prerequisite checker with PDF transcript parsing.
+          </li>
+        </ul>
+      </article>
+        </div>
+      </section>
+
+
+    </div>
+  </div>
+
+  <footer>
+    <span>Valerie Liang · Los Gatos, CA</span>
+    <span>&copy; 2026</span>
+  </footer>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>

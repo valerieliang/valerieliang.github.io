@@ -7,9 +7,12 @@
 :root {
   --nav-h: 64px;
   --serif: 'DM Serif Display', Georgia, serif;
-  --mono: 'Silkscreen', monospace;
+  /* Was Silkscreen. As a pixel font its C and O are near-identical below
+     about 12px, which is the size most labels here use. Space Mono keeps the
+     retro machine feel with letterforms that separate at small sizes. */
+  --mono: 'Space Mono', 'Courier New', monospace;
   --sans: 'Outfit', sans-serif;
-  --glass-bg: rgba(8,8,16,0.55);
+  --glass-bg: rgba(9,7,26,0.78);
   --glass-border: rgba(255,255,255,0.07);
   --text-hi: #eef2f7;
   --text-mid: rgba(200,215,235,0.72);
@@ -28,12 +31,9 @@ body {
   color: var(--text-hi);
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
-  background-color: #07061a;
-  background-image:
-    radial-gradient(ellipse 70% 50% at 15% 5%, rgba(80,30,160,0.45) 0%, transparent 55%),
-    radial-gradient(ellipse 55% 45% at 85% 85%, rgba(20,10,120,0.50) 0%, transparent 55%),
-    radial-gradient(ellipse 45% 38% at 50% 40%, rgba(60,20,140,0.25) 0%, transparent 48%),
-    radial-gradient(ellipse 100% 100% at 50% 50%, #0b0920 0%, #040310 100%);
+  /* Deep indigo, and flat. Every decorative layer below is kept out of the
+     900px reading column, so contrast under text never changes. */
+  background-color: #0a0722;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -61,24 +61,6 @@ body::before {
     radial-gradient(2px 2px at 67% 6%, rgba(255,255,255,1.00) 0%, transparent 100%),
     radial-gradient(2px 2px at 90% 28%, rgba(200,220,255,0.95) 0%, transparent 100%);
   pointer-events: none;
-}
-
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  background:
-    radial-gradient(ellipse 40% 30% at 28% 18%, rgba(100,50,220,0.14) 0%, transparent 70%),
-    radial-gradient(ellipse 48% 38% at 74% 72%, rgba(40,20,180,0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 30% 22% at 60% 10%, rgba(130,60,200,0.08) 0%, transparent 65%);
-  animation: nebulaDrift 22s ease-in-out infinite alternate;
-  pointer-events: none;
-}
-
-@keyframes nebulaDrift {
-  from { transform: translate(0,0) scale(1); }
-  to { transform: translate(16px,-12px) scale(1.03); }
 }
 
 .pixel-sprite {
@@ -367,32 +349,6 @@ nav {
   padding: 40px 0 80px;
 }
 
-/* About */
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 56px;
-}
-
-.about-bio {
-  font-size: 0.95rem;
-  color: var(--text-mid);
-  line-height: 1.9;
-}
-
-.skill-group {
-  margin-bottom: 22px;
-}
-
-.skill-group-label {
-  font-family: var(--mono);
-  font-size: 0.52rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-lo);
-  margin-bottom: 10px;
-}
-
 .pills {
   display: flex;
   flex-wrap: wrap;
@@ -401,11 +357,12 @@ nav {
 
 .pill {
   font-family: var(--mono);
-  font-size: 0.55rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
   color: var(--text-mid);
   border: 1px solid var(--glass-border);
   background: rgba(255,255,255,0.02);
-  padding: 5px 11px;
+  padding: 7px 13px;
   border-radius: 2px;
   transition: border-color 0.2s, color 0.2s;
 }
@@ -421,19 +378,6 @@ nav {
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-.project-subhead {
-  font-family: var(--mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-lo);
-  margin: 26px 0 2px;
-}
-
-.project-subhead:first-child {
-  margin-top: 0;
 }
 
 .project-card {
@@ -473,9 +417,9 @@ nav {
 }
 
 .project-desc {
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: var(--text-mid);
-  line-height: 1.75;
+  line-height: 1.7;
 }
 
 .project-arrow {
@@ -628,9 +572,9 @@ nav {
 }
 
 .abstract-modal-text {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--text-mid);
-  line-height: 1.85;
+  line-height: 1.8;
 }
 
 @media (max-width: 700px) {
@@ -676,7 +620,7 @@ nav {
 }
 
 .pub-venue {
-  font-size: 0.82rem;
+  font-size: 0.9rem;
   color: var(--text-mid);
   font-style: italic;
 }
@@ -705,7 +649,7 @@ nav {
   border-bottom: 1px solid var(--glass-border);
   text-decoration: none;
   color: var(--text-mid);
-  font-size: 0.9rem;
+  font-size: 1rem;
   transition: color 0.2s;
 }
 
@@ -773,13 +717,26 @@ footer span {
   transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1);
 }
 
-.stagger.visible > *:nth-child(1) { transition-delay: 0s;    opacity: 1; transform: none; }
-.stagger.visible > *:nth-child(2) { transition-delay: 0.08s; opacity: 1; transform: none; }
-.stagger.visible > *:nth-child(3) { transition-delay: 0.16s; opacity: 1; transform: none; }
-.stagger.visible > *:nth-child(4) { transition-delay: 0.24s; opacity: 1; transform: none; }
-.stagger.visible > *:nth-child(5) { transition-delay: 0.32s; opacity: 1; transform: none; }
-.stagger.visible > *:nth-child(6) { transition-delay: 0.40s; opacity: 1; transform: none; }
-.stagger.visible > *:nth-child(7) { transition-delay: 0.48s; opacity: 1; transform: none; }
+.stagger.visible > * {
+  opacity: 1;
+  transform: none;
+}
+
+.stagger.visible > *:nth-child(1)  { transition-delay: 0s;    }
+.stagger.visible > *:nth-child(2)  { transition-delay: 0.08s; }
+.stagger.visible > *:nth-child(3)  { transition-delay: 0.16s; }
+.stagger.visible > *:nth-child(4)  { transition-delay: 0.24s; }
+.stagger.visible > *:nth-child(5)  { transition-delay: 0.32s; }
+.stagger.visible > *:nth-child(6)  { transition-delay: 0.40s; }
+.stagger.visible > *:nth-child(7)  { transition-delay: 0.48s; }
+.stagger.visible > *:nth-child(8)  { transition-delay: 0.56s; }
+.stagger.visible > *:nth-child(9)  { transition-delay: 0.64s; }
+.stagger.visible > *:nth-child(10) { transition-delay: 0.72s; }
+.stagger.visible > *:nth-child(11) { transition-delay: 0.80s; }
+.stagger.visible > *:nth-child(12) { transition-delay: 0.88s; }
+
+/* Anything past the twelfth shares the last delay rather than waiting longer. */
+.stagger.visible > *:nth-child(n+13) { transition-delay: 0.96s; }
 
 @keyframes riseIn {
   from { opacity: 0; transform: translateY(20px); }
@@ -804,12 +761,15 @@ footer span {
   50% { transform: skewY(5deg); }
 }
 
-/* Comet animation */
+/* Comet animation.
+   The travel is deliberately short. The comet now starts below the planet
+   orbit alongside the intro paragraph rather than in the corner of the card,
+   so a long sweep would carry it straight off the edge. */
 @keyframes cometZoom {
-  0% { opacity: 0; transform: translate(-180px, 180px); }
-  8% { opacity: 0.85; }
-  80% { opacity: 0.80; }
-  100% { opacity: 0; transform: translate(260px, -260px); }
+  0% { opacity: 0; transform: translate(-90px, 90px); }
+  10% { opacity: 0.85; }
+  78% { opacity: 0.75; }
+  100% { opacity: 0; transform: translate(120px, -120px); }
 }
 
 #hd-comet {
@@ -945,10 +905,6 @@ footer span {
   .glass {
     padding: 40px 24px;
   }
-  .about-grid {
-    grid-template-columns: 1fr;
-    gap: 36px;
-  }
   .page-wrap {
     padding: 0 14px;
   }
@@ -982,6 +938,15 @@ footer span {
     height: 120px;
     top: 10px;
     right: 16px;
+  }
+  /* The orbit is smaller here, so the comet follows it up the card. */
+  #hd-comet {
+    top: 150px;
+    right: 10px;
+  }
+  #hd-comet svg {
+    width: 96px;
+    height: auto;
   }
   .orbit-ring {
     width: 96px;
@@ -1038,3 +1003,507 @@ footer span {
     letter-spacing: 0.14em;
   }
 }
+/* =========================================================================
+   MULTI-PAGE ADDITIONS
+
+   Everything below was added when the single scrolling page was split into
+   Home / Experience / Projects / About. Grouped here rather than merged into
+   the sections above so the original single-page styles stay easy to find.
+   ========================================================================= */
+
+/* --- Active nav item -----------------------------------------------------
+   Set per page in the markup, so it works without JavaScript. */
+.nav-links a.active {
+  color: var(--text-hi);
+}
+
+.nav-links a.active::after {
+  width: 100%;
+}
+
+.nav-drawer a.active {
+  color: var(--text-hi);
+}
+
+/* --- Hero tagline -------------------------------------------------------- */
+.hero-tagline {
+  max-width: 46ch;
+  font-size: 1rem;
+  color: var(--text-mid);
+  line-height: 1.85;
+  margin-top: -12px;
+  opacity: 0;
+  animation: riseIn 1s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.7s;
+}
+
+/* --- Sub-page headers ----------------------------------------------------
+   The hero supplies its own top spacing; other pages need to clear the
+   fixed nav themselves. */
+.page-head {
+  width: 100%;
+  max-width: 900px;
+  padding: calc(var(--nav-h) + 72px) 0 8px;
+}
+
+.page-title {
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 5.5vw, 3.6rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--text-hi);
+  margin-bottom: 20px;
+}
+
+.page-intro {
+  max-width: 62ch;
+  font-size: 1rem;
+  color: var(--text-mid);
+  line-height: 1.85;
+}
+
+.page-intro a {
+  color: rgba(160, 200, 255, 0.92);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(160, 200, 255, 0.28);
+}
+
+.page-intro a:hover {
+  border-bottom-color: rgba(160, 200, 255, 0.7);
+}
+
+/* --- Section label suffix, e.g. "Theses  in progress" -------------------- */
+/* --- "See more" style links ---------------------------------------------- */
+.more-link {
+  margin-top: 24px;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+}
+
+.more-link a {
+  color: rgba(160, 200, 255, 0.92);
+  text-decoration: none;
+}
+
+/* The home page puts two of these side by side. */
+.more-link a + a {
+  margin-left: 22px;
+}
+
+.more-link a:hover {
+  color: var(--text-hi);
+}
+
+/* --- Experience entries --------------------------------------------------
+   One entry per role or thesis: heading block, optional context note,
+   bullets, then a keyword row. */
+.exp-item {
+  padding: 30px 0;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.exp-item:last-child {
+  border-bottom: none;
+}
+
+.exp-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 28px;
+  margin-bottom: 6px;
+}
+
+.exp-role {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text-hi);
+  line-height: 1.35;
+  margin-bottom: 4px;
+}
+
+.exp-org {
+  font-size: 0.95rem;
+  color: rgba(160, 200, 255, 0.78);
+  line-height: 1.6;
+}
+
+.exp-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.exp-date,
+.exp-loc {
+  font-family: var(--mono);
+  font-size: 0.54rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-lo);
+  white-space: nowrap;
+}
+
+/* Context line: what the group is, or who advised the work. */
+.exp-note {
+  font-size: 0.85rem;
+  color: var(--text-lo);
+  font-style: italic;
+  line-height: 1.65;
+  margin: 8px 0 14px;
+}
+
+.exp-bullets {
+  list-style: none;
+  margin-top: 14px;
+}
+
+.exp-bullets li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 12px;
+  font-size: 1rem;
+  color: var(--text-mid);
+  line-height: 1.75;
+}
+
+.exp-bullets li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0.75em;
+  width: 5px;
+  height: 5px;
+  background: var(--accent-line);
+  border-radius: 1px;
+}
+
+.exp-bullets strong {
+  font-weight: 500;
+  color: var(--text-hi);
+}
+
+
+/* --- Responsive ---------------------------------------------------------- */
+@media (max-width: 700px) {
+  .page-head {
+    padding: calc(var(--nav-h) + 48px) 0 4px;
+  }
+
+  .exp-head {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .exp-meta {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+  }
+
+  .hero-tagline {
+    font-size: 0.92rem;
+  }
+}
+
+/* --- Hardware page -------------------------------------------------------
+   A page that exists before the work does, so it is built around a status
+   panel rather than a list of finished builds. */
+/* An empty slot where a build will go. Dashed rather than solid so it reads
+   as a placeholder instead of a card that failed to load. */
+.project-card.placeholder {
+  border-style: dashed;
+  border-color: rgba(255, 255, 255, 0.11);
+  background: rgba(8, 8, 16, 0.32);
+  cursor: default;
+}
+
+.project-card.placeholder:hover {
+  transform: none;
+  border-color: rgba(255, 255, 255, 0.11);
+}
+
+.project-card.placeholder .project-name,
+.project-card.placeholder .project-desc {
+  color: var(--text-lo);
+}
+
+.project-card.placeholder .project-arrow {
+  letter-spacing: 0.1em;
+}
+
+.project-card.placeholder:hover .project-arrow {
+  transform: none;
+  color: var(--text-lo);
+}
+
+/* --- Six nav items ------------------------------------------------------
+   The bar was laid out for four. Tighten the gap before the drawer takes
+   over at 700px, so the links do not collide with the wordmark. */
+@media (max-width: 1040px) {
+  .nav-links {
+    gap: 22px;
+  }
+}
+
+@media (max-width: 880px) {
+  nav {
+    padding: 0 28px;
+  }
+
+  .nav-links {
+    gap: 16px;
+  }
+
+  .nav-links a {
+    font-size: 0.54rem;
+  }
+}
+
+/* --- Sub-tabs ------------------------------------------------------------
+   Used on Experience and Projects so each page stays about a screen tall and
+   groups are switched rather than scrolled past. */
+.subtab-group {
+  width: 100%;
+}
+
+.subtabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 16px;
+  margin-bottom: 26px;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.subtab {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-lo);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: 40px;
+  padding: 9px 17px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.subtab:hover {
+  color: var(--text-hi);
+  border-color: var(--accent-line);
+}
+
+.subtab.active {
+  color: var(--text-hi);
+  border-color: var(--accent-line);
+  background: var(--accent);
+}
+
+.subtab:focus-visible {
+  outline: 2px solid var(--accent-line);
+  outline-offset: 2px;
+}
+
+.subtab-panel {
+  display: none;
+}
+
+.subtab-panel.active {
+  display: block;
+  animation: panelIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .subtab-panel.active {
+    animation: none;
+  }
+}
+
+/* The first entry in a panel sits directly under the tab row, so it does not
+   need the leading padding that separates stacked entries. */
+.subtab-panel .exp-item:first-child {
+  padding-top: 0;
+}
+
+/* --- Home ----------------------------------------------------------------
+   The hero fills the viewport again: the landing page is the one place that
+   gets a dramatic entrance, and About sits a scroll below it. */
+#hero {
+  min-height: 100vh;
+}
+
+
+@media (max-width: 700px) {
+  #hero {
+    min-height: 88vh;
+  }
+
+  .subtabs {
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .subtab {
+    font-size: 0.52rem;
+    padding: 8px 13px;
+  }
+}
+
+/* --- Skills --------------------------------------------------------------
+   A label-and-tags row per group, in place of the old prose About block. */
+.skills-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.skill-row {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 28px;
+  align-items: start;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.skill-row:first-child {
+  border-top: 1px solid var(--glass-border);
+}
+
+.skill-row-label {
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-lo);
+  padding-top: 4px;
+}
+
+@media (max-width: 700px) {
+  .skill-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 16px 0;
+  }
+
+  .skill-row-label {
+    padding-top: 0;
+  }
+}
+
+/* --- Panel lead ----------------------------------------------------------
+   One short line at the top of a sub-tab panel, before its content. */
+.panel-lead {
+  max-width: 62ch;
+  font-size: 1rem;
+  color: var(--text-mid);
+  line-height: 1.8;
+  margin-bottom: 30px;
+}
+
+/* A section label sitting inside a panel follows a lead line or the tab row,
+   so it does not need the leading margin it carries at page level. */
+.subtab-panel .section-label {
+  margin-bottom: 20px;
+}
+
+/* --- Connect -------------------------------------------------------------
+   The page is a single card with no heading above it, so it takes the top
+   spacing the page header would otherwise have provided. */
+.connect-wrap {
+  padding-top: calc(var(--nav-h) + 72px);
+}
+
+@media (max-width: 700px) {
+  .connect-wrap {
+    padding-top: calc(var(--nav-h) + 48px);
+  }
+}
+
+/* --- Space backdrop ------------------------------------------------------
+   The bodies are free to sit behind the content. What keeps text readable is
+   .content-scrim below, a dimming panel over the reading column that the
+   text then sits on top of. */
+.space-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.space-body {
+  position: absolute;
+  image-rendering: pixelated;
+}
+
+.sb-ringed {
+  top: 14vh;
+  left: 4vw;
+  width: 190px;
+  opacity: 0.70;
+}
+
+.sb-moon {
+  top: 62vh;
+  right: 6vw;
+  width: 74px;
+  opacity: 0.62;
+}
+
+.sb-far {
+  top: 32vh;
+  right: 16vw;
+  width: 40px;
+  opacity: 0.50;
+}
+
+.sb-cluster {
+  top: 78vh;
+  left: 14vw;
+  width: 120px;
+  opacity: 0.80;
+}
+
+/* The reading column, dimmed so anything drifting behind it stays faint.
+   Masked at both edges so there is no visible seam against the background. */
+.content-scrim {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1040px, 100%);
+  z-index: 2;
+  pointer-events: none;
+  background: rgba(10, 7, 34, 0.80);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
+}
+
+@media (max-width: 1099px) {
+  /* Less clear margin, so the bodies move outward and fade back. */
+  .sb-ringed { width: 130px; opacity: 0.45; }
+  .sb-moon   { width: 54px;  opacity: 0.42; }
+  .sb-far    { width: 30px;  opacity: 0.36; }
+  .sb-cluster{ width: 86px;  opacity: 0.55; }
+
+  .content-scrim {
+    width: 100%;
+    background: rgba(10, 7, 34, 0.86);
+    -webkit-mask-image: none;
+            mask-image: none;
+  }
+}
+
